@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mapa de Envueltos Tradicionales del Ecuador</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --color-principal: #0284c7;
+  --color-fondo: #f4f6f8;
+  --color-card: #ffffff;
+  --color-borde: #e0e0e0;
+  --radio: 12px;
+}
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  background: var(--color-fondo);
+  margin: 0;
+  color: #111;
+}
+main {
+  max-width: 950px;
+  margin: 2rem auto;
+  background: var(--color-card);
+  padding: 2rem;
+  border-radius: var(--radio);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+h1 {
+  text-align: center;
+  color: var(--color-principal);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+p.sub {
+  text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
+}
+section {
+  background: var(--color-fondo);
+  border-radius: var(--radio);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 6px solid var(--color-principal);
+}
+label {
+  font-weight: 600;
+  margin-top: 1rem;
+  display: block;
+}
+input[type=text], input[type=number], select, textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  font-size: 1rem;
+  margin-top: 0.3rem;
+  background: #fff;
+}
+textarea { min-height: 80px; }
+button {
+  background: var(--color-principal);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background: #0369a1;
+}
+#status {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.success {
+  color: #16a34a;
+}
+.error {
+  color: #dc2626;
+}
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 2rem;
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>Mapa de Envueltos Tradicionales del Ecuador</h1>
+  <p class="sub">Comparte tus conocimientos sobre los envueltos tradicionales y ayuda a preservar nuestras raíces culinarias 🍃</p>
+
+  <form id="encuesta">
+    <section>
+      <label>Nombres completos *</label>
+      <input type="text" name="nombres" required>
+
+      <label>Edad *</label>
+      <input type="number" name="edad" required>
+
+      <label>Género *</label>
+      <select name="genero" required>
+        <option value="">Seleccione</option>
+        <option>Femenino</option>
+        <option>Masculino</option>
+        <option>Otro</option>
+      </select>
+
+      <label>Región *</label>
+      <select name="region" required>
+        <option value="">Seleccione</option>
+        <option>Costa</option>
+        <option>Sierra</option>
+        <option>Amazonía</option>
+        <option>Insular</option>
+      </select>
+
+      <label>Provincia *</label>
+      <input type="text" name="provincia" required>
+
+      <label>Ciudad *</label>
+      <input type="text" name="ciudad" required>
+
+      <label>Actividad principal *</label>
+      <select name="actividad" required>
+        <option value="">Seleccione</option>
+        <option>Cocinero/a tradicional</option>
+        <option>Docente de gastronomía</option>
+        <option>Promotor/a cultural</option>
+        <option>Chef</option>
+      </select>
+
+      <label>Tiempo de experiencia *</label>
+      <input type="text" name="experiencia" required>
+    </section>
+
+    <section>
+      <label>¿Qué tipo de envueltos conoce o prepara?</label>
+      <textarea name="envueltos" placeholder="Ejemplo: Humita, Quimbolito, Tamal manaba, etc."></textarea>
+    </section>
+
+    <section>
+      <label>¿Qué ingredientes varían según la región?</label>
+      <textarea name="ingredientes"></textarea>
+
+      <label>¿Ha observado transformaciones en la preparación o consumo?</label>
+      <textarea name="transformaciones"></textarea>
+
+      <label>¿Qué estrategias usa para conservar y transmitir estos conocimientos?</label>
+      <textarea name="estrategias"></textarea>
+    </section>
+
+    <button type="submit">Enviar respuestas</button>
+    <div id="status"></div>
+  </form>
+
+  <footer>Desarrollado con 💙 por Awani Turismo | 2025</footer>
+</main>
+
+<script>
+// === CONFIGURA TU SCRIPT AQUÍ ===
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzTdjIHxfGDPEQHWlmjakXSVP_YKfbAVO8LIOT9tFuPg05_NSPgsYkbbrcbS45W4fKx/exec';
+const form = document.getElementById('encuesta');
+const status = document.getElementById('status');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  status.textContent = "⏳ Enviando tus respuestas...";
+  status.className = "";
+  
+  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    .then(response => {
+      status.textContent = "✅ ¡Gracias! Tus respuestas fueron enviadas correctamente.";
+      status.className = "success";
+      form.reset();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      status.textContent = "❌ Hubo un error al enviar tus respuestas. Intenta nuevamente.";
+      status.className = "error";
+    });
+});
+</script>
+</body>
+</html>
