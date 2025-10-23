@@ -4,192 +4,294 @@
 <meta charset="utf-8">
 <title>Mapa de Envueltos Tradicionales del Ecuador</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-:root {
-  --color-principal: #0284c7;
-  --color-fondo: #f4f6f8;
-  --color-card: #ffffff;
-  --color-borde: #e0e0e0;
-  --radio: 12px;
-}
 body {
-  font-family: "Poppins", system-ui, sans-serif;
-  background: var(--color-fondo);
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  background: #f6f8fc;
   margin: 0;
-  color: #111;
+  color: #202124;
 }
 main {
-  max-width: 950px;
+  max-width: 900px;
   margin: 2rem auto;
-  background: var(--color-card);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 2rem;
-  border-radius: var(--radio);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  animation: fadeIn 1s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 h1 {
-  text-align: center;
-  color: var(--color-principal);
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-p.sub {
   text-align: center;
-  color: #555;
-  margin-bottom: 2rem;
+  color: #1a73e8;
 }
 section {
-  background: var(--color-fondo);
-  border-radius: var(--radio);
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
-  border-left: 6px solid var(--color-principal);
+  border-top: 2px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
 }
 label {
-  font-weight: 600;
-  margin-top: 1rem;
   display: block;
+  margin-top: .8rem;
+  font-weight: 500;
 }
 input[type=text], input[type=number], select, textarea {
   width: 100%;
-  padding: 0.6rem;
+  padding: .6rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  border: 1px solid var(--color-borde);
-  font-size: 1rem;
-  margin-top: 0.3rem;
-  background: #fff;
+  margin-top: .3rem;
 }
-textarea { min-height: 80px; }
-button {
-  background: var(--color-principal);
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.4rem;
-  border-radius: 8px;
-  font-size: 1rem;
+textarea { min-height: 70px; }
+
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: .5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: .45rem .9rem;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  background: #f1f3f4;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 }
-button:hover {
-  background: #0369a1;
+.chip input { display: none; }
+.chip.active {
+  background: #1a73e8;
+  color: white;
+  border-color: #1a73e8;
 }
-#status {
-  text-align: center;
-  font-weight: 600;
+.envuelto-card {
+  background: #f9fbff;
+  border: 2px solid #cfe3ff;
+  border-radius: 10px;
+  padding: 1rem;
   margin-top: 1rem;
 }
+.envuelto-card legend {
+  font-weight: 600;
+  color: #1a73e8;
+}
+button {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: .8rem 1.4rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+button:hover { background: #1669c1; }
+
 .success {
-  color: #16a34a;
+  background: #e6f4ea;
+  color: #0f9d58;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 1rem;
 }
 .error {
-  color: #dc2626;
-}
-footer {
+  background: #fce8e6;
+  color: #d93025;
+  padding: 1rem;
+  border-radius: 8px;
   text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 </style>
 </head>
 <body>
 <main>
-  <h1>Mapa de Envueltos Tradicionales del Ecuador</h1>
-  <p class="sub">Comparte tus conocimientos sobre los envueltos tradicionales y ayuda a preservar nuestras raíces culinarias 🍃</p>
+<h1>Mapa de Envueltos Tradicionales del Ecuador</h1>
+<p>Esta encuesta tiene fines académicos y de investigación. La información será tratada de forma confidencial.</p>
 
-  <form id="encuesta">
-    <section>
-      <label>Nombres completos *</label>
-      <input type="text" name="nombres" required>
+<form id="encuesta">
 
-      <label>Edad *</label>
-      <input type="number" name="edad" required>
+<section>
+<h2>Datos Generales</h2>
+<label>Nombres completos *</label><input id="nombre" type="text" required>
+<label>Edad *</label><input id="edad" type="number" required>
+<label>Género *</label>
+<select id="genero" required>
+<option value="">Seleccione</option>
+<option>Femenino</option><option>Masculino</option><option>Otro</option>
+</select>
+<label>Región *</label>
+<select id="region" required>
+<option value="">Seleccione</option><option>Costa</option><option>Sierra</option><option>Amazonía</option><option>Insular</option>
+</select>
+<label>Provincia *</label><input id="provincia" type="text" required>
+<label>Ciudad *</label><input id="ciudad" type="text" required>
+<label>Actividad principal *</label>
+<select id="actividad" required>
+<option value="">Seleccione</option>
+<option>Cocinero/a tradicional</option><option>Docente de gastronomía</option><option>Promotor/a cultural</option><option>Chef</option>
+</select>
+<label>Tiempo de experiencia *</label><input id="experiencia" type="text" required>
+</section>
 
-      <label>Género *</label>
-      <select name="genero" required>
-        <option value="">Seleccione</option>
-        <option>Femenino</option>
-        <option>Masculino</option>
-        <option>Otro</option>
-      </select>
+<section>
+<h2>Información de los envueltos</h2>
+<p>Selecciona los envueltos que conoces o preparas. Se generará un bloque de preguntas por cada uno.</p>
+<div id="lista-envueltos" class="inline"></div>
+<div class="inline" style="margin-top:1rem;">
+  <label class="chip"><input type="checkbox" id="otros-chk">Otros</label>
+  <input type="text" id="otros-text" placeholder="Especifique (use coma si son varios)" hidden>
+</div>
+<div id="contenedor-envueltos"></div>
+</section>
 
-      <label>Región *</label>
-      <select name="region" required>
-        <option value="">Seleccione</option>
-        <option>Costa</option>
-        <option>Sierra</option>
-        <option>Amazonía</option>
-        <option>Insular</option>
-      </select>
+<section>
+<h2>Cierre</h2>
+<label>¿Quiénes transmiten estos conocimientos?</label>
+<div class="inline">
+<label class="chip"><input type="checkbox">Docentes o estudiantes</label>
+<label class="chip"><input type="checkbox">Instituciones educativas</label>
+<label class="chip"><input type="checkbox">Cocineros/as tradicionales</label>
+<label class="chip"><input type="checkbox">Madres/abuelas</label>
+<label class="chip"><input type="checkbox">Museos gastronómicos</label>
+<label class="chip"><input type="checkbox">Medios digitales</label>
+</div>
+<input type="text" placeholder="Otros: especifique">
+<label>¿Qué ingredientes varían según la región?</label>
+<textarea></textarea>
+<label>¿Ha observado transformaciones en la preparación o consumo?</label>
+<textarea></textarea>
+<label>¿Qué estrategias usa para conservar y transmitir estos conocimientos?</label>
+<textarea></textarea>
+</section>
 
-      <label>Provincia *</label>
-      <input type="text" name="provincia" required>
+<button type="submit">Enviar</button>
+<div id="mensaje"></div>
 
-      <label>Ciudad *</label>
-      <input type="text" name="ciudad" required>
-
-      <label>Actividad principal *</label>
-      <select name="actividad" required>
-        <option value="">Seleccione</option>
-        <option>Cocinero/a tradicional</option>
-        <option>Docente de gastronomía</option>
-        <option>Promotor/a cultural</option>
-        <option>Chef</option>
-      </select>
-
-      <label>Tiempo de experiencia *</label>
-      <input type="text" name="experiencia" required>
-    </section>
-
-    <section>
-      <label>¿Qué tipo de envueltos conoce o prepara?</label>
-      <textarea name="envueltos" placeholder="Ejemplo: Humita, Quimbolito, Tamal manaba, etc."></textarea>
-    </section>
-
-    <section>
-      <label>¿Qué ingredientes varían según la región?</label>
-      <textarea name="ingredientes"></textarea>
-
-      <label>¿Ha observado transformaciones en la preparación o consumo?</label>
-      <textarea name="transformaciones"></textarea>
-
-      <label>¿Qué estrategias usa para conservar y transmitir estos conocimientos?</label>
-      <textarea name="estrategias"></textarea>
-    </section>
-
-    <button type="submit">Enviar respuestas</button>
-    <div id="status"></div>
-  </form>
-
-  <footer>Desarrollado con 💙 por Awani Turismo | 2025</footer>
+</form>
 </main>
 
-<script>
-// === CONFIGURA TU SCRIPT AQUÍ ===
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzTdjIHxfGDPEQHWlmjakXSVP_YKfbAVO8LIOT9tFuPg05_NSPgsYkbbrcbS45W4fKx/exec';
-const form = document.getElementById('encuesta');
-const status = document.getElementById('status');
+<!-- Template de preguntas por envuelto -->
+<template id="tpl-envuelto">
+<fieldset class="envuelto-card">
+<legend></legend>
+<label>Tipo de masa/base:</label><input type="text" placeholder="Ej. maíz, verde, yuca...">
+<label>Relleno que se utiliza:</label><input type="text" placeholder="Ej. pollo, cerdo, queso...">
+<label>Tipo de hoja que se usa:</label><input type="text" placeholder="Ej. hoja de achira, plátano...">
+<label>Técnica de cocción:</label><input type="text" placeholder="Ej. hervido, al vapor...">
+<label>Herramienta que se usa:</label><input type="text" placeholder="Ej. olla de barro, vaporera...">
+<label>Contexto tradicional de preparación:</label><input type="text" placeholder="Ej. festividades, celebraciones familiares...">
+</fieldset>
+</template>
 
-form.addEventListener('submit', e => {
+<script>
+const ENVUELTOS = ["Humita","Chigüil","Quimbolito","Tamal serrano","Tamal lojano","Tamal manaba","Bollo de pescado","Ayaca","Muchín de yuca","Envuelto de verde","Envuelto de arroz"];
+const lista = document.getElementById("lista-envueltos");
+const tpl = document.getElementById("tpl-envuelto");
+const contenedor = document.getElementById("contenedor-envueltos");
+const otrosChk = document.getElementById("otros-chk");
+const otrosTxt = document.getElementById("otros-text");
+
+// Crear chips de envueltos
+ENVUELTOS.forEach(n => {
+  const chip = document.createElement("label");
+  chip.className = "chip";
+  chip.innerHTML = `<input type="checkbox" value="${n}"><span>${n}</span>`;
+  lista.appendChild(chip);
+});
+
+// Eventos
+lista.addEventListener("change", actualizar);
+otrosChk.addEventListener("change", () => {
+  otrosTxt.hidden = !otrosChk.checked;
+  actualizar();
+});
+otrosTxt.addEventListener("input", actualizar);
+
+// Función que genera grupos de preguntas dinámicamente
+function actualizar() {
+  contenedor.innerHTML = "";
+  let seleccionados = [];
+
+  lista.querySelectorAll("input[type=checkbox]").forEach(ch => {
+    const chip = ch.closest(".chip");
+    chip.classList.remove("active");
+    if (ch.checked) {
+      chip.classList.add("active");
+      seleccionados.push(ch.value);
+    }
+  });
+
+  if (otrosChk.checked && otrosTxt.value.trim()) {
+    const otros = otrosTxt.value.split(",").map(x => x.trim()).filter(Boolean);
+    seleccionados = seleccionados.concat(otros);
+  }
+
+  seleccionados.forEach(nombre => {
+    const clone = tpl.content.firstElementChild.cloneNode(true);
+    clone.querySelector("legend").textContent = "Envuelto: " + nombre;
+    contenedor.appendChild(clone);
+  });
+}
+
+// Envío de datos
+document.getElementById("encuesta").addEventListener("submit", function(e) {
   e.preventDefault();
-  status.textContent = "⏳ Enviando tus respuestas...";
-  status.className = "";
-  
-  fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    .then(response => {
-      status.textContent = "✅ ¡Gracias! Tus respuestas fueron enviadas correctamente.";
-      status.className = "success";
-      form.reset();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      status.textContent = "❌ Hubo un error al enviar tus respuestas. Intenta nuevamente.";
-      status.className = "error";
-    });
+  const msg = document.getElementById("mensaje");
+  msg.innerHTML = "";
+
+  const data = {
+    nombres: nombre.value,
+    edad: edad.value,
+    genero: genero.value,
+    region: region.value,
+    provincia: provincia.value,
+    ciudad: ciudad.value,
+    actividad: actividad.value,
+    experiencia: experiencia.value,
+    envueltosSeleccionados: [],
+    respuestasPorEnvuelto: {}
+  };
+
+  lista.querySelectorAll("input[type=checkbox]:checked").forEach(ch => data.envueltosSeleccionados.push(ch.value));
+
+  contenedor.querySelectorAll(".envuelto-card").forEach(card => {
+    const envuelto = card.querySelector("legend").textContent.replace("Envuelto: ","");
+    const inputs = card.querySelectorAll("input[type=text]");
+    data.respuestasPorEnvuelto[envuelto] = {
+      masa: inputs[0].value,
+      relleno: inputs[1].value,
+      hoja: inputs[2].value,
+      tecnica: inputs[3].value,
+      herramienta: inputs[4].value,
+      contexto: inputs[5].value
+    };
+  });
+
+  fetch("https://script.google.com/macros/s/AKfycbyfD5T0MOyMdK7FeqiIUfr_Zb7Ogz6LJMbbUU8nZa0OnwtuHmm1Z02hcw1Q-7sj24AoQA/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" },
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      msg.innerHTML = '<div class="success">✅ ¡Gracias! Tus respuestas se guardaron correctamente.</div>';
+      e.target.reset();
+      contenedor.innerHTML = "";
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+    } else {
+      msg.innerHTML = '<div class="error">❌ Error al guardar: '+(res.error||'Intente nuevamente')+'</div>';
+    }
+  })
+  .catch(() => {
+    msg.innerHTML = '<div class="error">❌ No se pudo conectar con el servidor.</div>';
+  });
 });
 </script>
 </body>
