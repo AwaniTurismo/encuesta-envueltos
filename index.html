@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario Envueltos - Awani Travel</title>
+  <title>Mapa de Envueltos</title>
   <style>
     body {
       font-family: "Google Sans", Arial, sans-serif;
@@ -13,15 +13,15 @@
     }
     .container {
       background: white;
-      max-width: 700px;
+      max-width: 750px;
       margin: auto;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1 {
-      font-size: 24px;
-      border-left: 4px solid #0F9D58;
+      font-size: 22px;
+      border-left: 4px solid #4285F4;
       padding-left: 10px;
       color: #333;
     }
@@ -30,7 +30,7 @@
       margin-top: 20px;
       font-weight: bold;
     }
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 10px;
       margin-top: 6px;
@@ -38,8 +38,28 @@
       border-radius: 5px;
       font-size: 15px;
     }
+    textarea { resize: vertical; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .chip {
+      padding: 10px 18px;
+      background: #f0f0f0;
+      border-radius: 25px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      transition: 0.3s;
+    }
+    .chip.active {
+      background: #4285F4;
+      color: white;
+      border-color: #4285F4;
+    }
     button {
-      background: #0F9D58;
+      background: #4285F4;
       color: white;
       padding: 12px 25px;
       border: none;
@@ -48,24 +68,41 @@
       margin-top: 25px;
       cursor: pointer;
     }
-    button:hover { background: #0B8043; }
-
-    .mensaje {
-      margin-top: 25px;
-      padding: 15px;
-      border-radius: 6px;
-      text-align: center;
-      display: none;
+    button:hover {
+      background: #3367d6;
     }
-    .ok { background: #e6f4ea; color: #137333; border: 1px solid #a8dab5; }
-    .error { background: #fce8e6; color: #c5221f; border: 1px solid #f8b4b0; }
+    .mensaje {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 6px;
+      display: none;
+      font-weight: bold;
+    }
+    .mensaje.ok {
+      background: #e6f4ea;
+      color: #137333;
+      border: 1px solid #b7dfb0;
+    }
+    .mensaje.error {
+      background: #fce8e6;
+      color: #c5221f;
+      border: 1px solid #f6aea9;
+    }
+    .bloque-envuelto {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fafafa;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Formulario de Envueltos - Awani Travel</h1>
+    <h1>Formulario - Mapa de Envueltos</h1>
     <form id="formulario">
-      <label>Nombre</label>
+
+      <label>Nombre completo</label>
       <input type="text" id="nombres" required>
 
       <label>Edad</label>
@@ -76,51 +113,124 @@
         <option value="">Seleccione...</option>
         <option>Femenino</option>
         <option>Masculino</option>
-        <option>Otro</option>
+        <option>Prefiero no decir</option>
       </select>
 
-      <button type="submit">Enviar respuestas</button>
-    </form>
+      <label>Región</label>
+      <select id="region" required>
+        <option value="">Seleccione...</option>
+        <option>Costa</option>
+        <option>Sierra</option>
+        <option>Oriente</option>
+        <option>Insular</option>
+      </select>
 
-    <div class="mensaje" id="mensaje"></div>
+      <label>Provincia</label>
+      <input type="text" id="provincia" required>
+
+      <label>Ciudad</label>
+      <input type="text" id="ciudad" required>
+
+      <label>Actividad principal</label>
+      <input type="text" id="actividad" placeholder="Ej: Chef, ama de casa, estudiante..." required>
+
+      <label>Años de experiencia preparando envueltos</label>
+      <input type="number" id="experiencia" min="0" required>
+
+      <label>Seleccione los envueltos que conoce o prepara</label>
+      <div class="chips" id="chipsContainer">
+        <div class="chip">Humita</div>
+        <div class="chip">Chigüil</div>
+        <div class="chip">Quimbolito</div>
+        <div class="chip">Tamal serrano</div>
+        <div class="chip">Tamal lojano</div>
+        <div class="chip">Tamal manaba</div>
+        <div class="chip">Bollo de pescado</div>
+        <div class="chip">Ayaca</div>
+        <div class="chip">Muchín de yuca</div>
+        <div class="chip">Envueltos de verde</div>
+        <div class="chip">Envueltos de arroz</div>
+        <div class="chip">Otros</div>
+      </div>
+
+      <div id="bloquesEnvueltos"></div>
+
+      <button type="submit">Enviar respuestas</button>
+      <div id="mensaje" class="mensaje"></div>
+
+    </form>
   </div>
 
   <script>
+    const chips = document.querySelectorAll(".chip");
+    const contenedor = document.getElementById("bloquesEnvueltos");
     const form = document.getElementById("formulario");
     const mensaje = document.getElementById("mensaje");
+
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chip.classList.toggle("active");
+        generarBloques();
+      });
+    });
+
+    function generarBloques() {
+      contenedor.innerHTML = "";
+      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
+      seleccionados.forEach(nombre => {
+        const bloque = document.createElement("div");
+        bloque.className = "bloque-envuelto";
+        bloque.innerHTML = `
+          <h3>${nombre}</h3>
+          <label>¿Cuántas veces lo prepara al mes?</label>
+          <input type="number" name="frecuencia-${nombre}" required>
+
+          <label>¿Usa ingredientes tradicionales o innovadores?</label>
+          <textarea name="ingredientes-${nombre}" rows="2"></textarea>
+
+          <label>¿Dónde aprendió a prepararlo?</label>
+          <input type="text" name="aprendizaje-${nombre}">
+        `;
+        contenedor.appendChild(bloque);
+      });
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
+
       const data = {
         nombres: document.getElementById("nombres").value,
         edad: document.getElementById("edad").value,
-        genero: document.getElementById("genero").value
+        genero: document.getElementById("genero").value,
+        region: document.getElementById("region").value,
+        provincia: document.getElementById("provincia").value,
+        ciudad: document.getElementById("ciudad").value,
+        actividad: document.getElementById("actividad").value,
+        experiencia: document.getElementById("experiencia").value,
+        envueltosSeleccionados: seleccionados
       };
 
-      mensaje.style.display = "block";
-      mensaje.className = "mensaje";
-      mensaje.textContent = "⏳ Enviando respuestas...";
-
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbxlBXjSUvC-VklIoCluMHdVNGjCXWRZfzVc2sUmV20ysggD5VnaErxZZsXgaT8P5pQmQw/exec", {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        if (res.ok) {
-          mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-          mensaje.classList.add("ok");
-          form.reset();
-        } else {
-          mensaje.textContent = "⚠️ Error: " + res.statusText;
-          mensaje.classList.add("error");
-        }
+        mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
+        mensaje.className = "mensaje ok";
+        mensaje.style.display = "block";
+        e.target.reset();
+        document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
+        contenedor.innerHTML = "";
 
       } catch (err) {
-        mensaje.textContent = "❌ Error al conectar con el servidor.";
-        mensaje.classList.add("error");
+        mensaje.textContent = "❌ Error al conectar con el servidor. Verifica la conexión o permisos.";
+        mensaje.className = "mensaje error";
+        mensaje.style.display = "block";
       }
     });
   </script>
