@@ -172,3 +172,84 @@ function actualizar(){
   });
   lista.querySelectorAll("input:not(:checked)").forEach(ch => ch.parentElement.classList.remove("active"));
   if(otrosChk.checked && otrosTxt.value.trim()){
+    otrosTxt.value.split(",").forEach(v => seleccionados.push(v.trim()));
+  }
+  seleccionados.forEach(crearGrupo);
+}
+
+function crearGrupo(nombre){
+  const f = document.createElement("fieldset");
+  f.innerHTML = `
+  <legend>${nombre}</legend>
+  <label>Tipo de masa/base:</label><input type="text">
+  <label>Relleno que se utiliza:</label><input type="text">
+  <label>Tipo de hoja que se usa:</label><input type="text">
+  <label>Técnica de cocción:</label><input type="text">
+  <label>Herramientas utilizadas:</label><input type="text">
+  <label>Formas de transmitir estos conocimientos:</label><input type="text">
+  <label>Contexto en que se prepara tradicionalmente:</label><textarea></textarea>
+  `;
+  contenedor.appendChild(f);
+}
+
+document.getElementById("encuesta").addEventListener("submit", e=>{
+  e.preventDefault();
+  const msg = document.getElementById("mensaje");
+  msg.style.display = "block";
+  msg.textContent = "⏳ Enviando respuestas...";
+  msg.className = "";
+
+  const data = {
+    nombres: e.target.nombres.value,
+    edad: e.target.edad.value,
+    genero: e.target.genero.value,
+    region: e.target.region.value,
+    provincia: e.target.provincia.value,
+    ciudad: e.target.ciudad.value,
+    actividad: e.target.actividad.value,
+    experiencia: e.target.experiencia.value,
+    envueltosSeleccionados: [],
+    respuestasPorEnvuelto: {}
+  };
+
+  document.querySelectorAll("#lista-envueltos input:checked").forEach(chk=>{
+    data.envueltosSeleccionados.push(chk.value);
+  });
+
+  document.querySelectorAll("#contenedor-envueltos fieldset").forEach(f=>{
+    const nombre = f.querySelector("legend").textContent;
+    const preguntas = {};
+    f.querySelectorAll("label").forEach(l=>{
+      const input = l.nextElementSibling;
+      if(input && (input.value || input.checked)){
+        preguntas[l.textContent.replace(":","")] = input.value;
+      }
+    });
+    data.respuestasPorEnvuelto[nombre] = preguntas;
+  });
+
+  fetch("https://script.google.com/macros/s/AKfycbwQD7Ao-Vecpa3ZPMI6-C0R_LJ-B9D7mqqLhaZ_Ksg4yOR0FITW1JU4Pb9ZeVAuwAKsUw/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res=>res.json())
+  .then(r=>{
+    if(r.success){
+      msg.textContent = "✅ ¡Gracias! Tus respuestas se guardaron correctamente.";
+      msg.className = "ok";
+      e.target.reset();
+      contenedor.innerHTML="";
+    } else {
+      msg.textContent = "❌ Hubo un error al guardar: " + r.error;
+      msg.className = "error";
+    }
+  })
+  .catch(err=>{
+    msg.textContent = "❌ Error al conectar con el servidor: " + err;
+    msg.className = "error";
+  });
+});
+</script>
+</body>
+</html>
