@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Debug - Formulario Envueltos</title>
+  <title>Formulario Envueltos - Awani Travel</title>
   <style>
     body {
       font-family: "Google Sans", Arial, sans-serif;
@@ -20,8 +20,8 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1 {
-      font-size: 22px;
-      border-left: 4px solid #4285F4;
+      font-size: 24px;
+      border-left: 4px solid #0F9D58;
       padding-left: 10px;
       color: #333;
     }
@@ -39,7 +39,7 @@
       font-size: 15px;
     }
     button {
-      background: #4285F4;
+      background: #0F9D58;
       color: white;
       padding: 12px 25px;
       border: none;
@@ -48,22 +48,22 @@
       margin-top: 25px;
       cursor: pointer;
     }
-    button:hover { background: #3367d6; }
+    button:hover { background: #0B8043; }
 
-    .output {
+    .mensaje {
       margin-top: 25px;
-      background: #eee;
       padding: 15px;
       border-radius: 6px;
-      font-family: monospace;
-      white-space: pre-wrap;
-      overflow-x: auto;
+      text-align: center;
+      display: none;
     }
+    .ok { background: #e6f4ea; color: #137333; border: 1px solid #a8dab5; }
+    .error { background: #fce8e6; color: #c5221f; border: 1px solid #f8b4b0; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🧩 Debug Formulario Envueltos</h1>
+    <h1>Formulario de Envueltos - Awani Travel</h1>
     <form id="formulario">
       <label>Nombre</label>
       <input type="text" id="nombres" required>
@@ -79,15 +79,15 @@
         <option>Otro</option>
       </select>
 
-      <button type="submit">Enviar (Modo Debug)</button>
+      <button type="submit">Enviar respuestas</button>
     </form>
 
-    <div class="output" id="resultado">Esperando envío...</div>
+    <div class="mensaje" id="mensaje"></div>
   </div>
 
   <script>
     const form = document.getElementById("formulario");
-    const salida = document.getElementById("resultado");
+    const mensaje = document.getElementById("mensaje");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -98,7 +98,9 @@
         genero: document.getElementById("genero").value
       };
 
-      salida.textContent = "⏳ Enviando datos al servidor...";
+      mensaje.style.display = "block";
+      mensaje.className = "mensaje";
+      mensaje.textContent = "⏳ Enviando respuestas...";
 
       try {
         const res = await fetch("https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec", {
@@ -107,19 +109,18 @@
           body: JSON.stringify(data)
         });
 
-        const texto = await res.text();
-
-        salida.textContent =
-          `✅ Respuesta del servidor:\n\n` +
-          `HTTP status: ${res.status}\n` +
-          `Status text: ${res.statusText}\n\n` +
-          `Body:\n${texto}`;
+        if (res.ok) {
+          mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
+          mensaje.classList.add("ok");
+          form.reset();
+        } else {
+          mensaje.textContent = "⚠️ Error: " + res.statusText;
+          mensaje.classList.add("error");
+        }
 
       } catch (err) {
-        salida.textContent =
-          `❌ Error al conectar con el servidor.\n\n` +
-          `Mensaje: ${err.message}\n\n` +
-          `Posible causa:\n- CORS bloqueado\n- Permisos del Web App\n- URL incorrecta o no pública`;
+        mensaje.textContent = "❌ Error al conectar con el servidor.";
+        mensaje.classList.add("error");
       }
     });
   </script>
