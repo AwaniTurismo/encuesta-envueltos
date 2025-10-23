@@ -1,282 +1,270 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
 <title>Mapa de Envueltos Tradicionales del Ecuador</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body {
-    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #f4f8fb, #e7f0fa);
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
-  .container {
-    max-width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  }
-  h1, h2, h3 {
-    color: #1a73e8;
-  }
-  p {
-    line-height: 1.6;
-  }
-  label {
-    display: block;
-    font-weight: 600;
-    margin-top: 18px;
-  }
-  input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin-top: 5px;
-    font-size: 15px;
-  }
-  textarea { resize: vertical; }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .chip {
-    background: #f1f3f4;
-    border: 1px solid #d0d7de;
-    padding: 10px 18px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  .chip.active {
-    background: #1a73e8;
-    color: white;
-    border-color: #1a73e8;
-  }
-  button {
-    background: #1a73e8;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-top: 25px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  button:hover { background: #155cb0; }
-  .mensaje {
-    display: none;
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-  }
-  .mensaje.ok { background: #e6f4ea; color: #137333; border: 1px solid #b7dfb0; }
-  .mensaje.error { background: #fce8e6; color: #c5221f; border: 1px solid #f6aea9; }
-  .bloque-envuelto {
-    margin-top: 25px;
-    padding: 25px;
-    background: #f9fbfc;
-    border-left: 4px solid #1a73e8;
-    border-radius: 10px;
-  }
-  .consentimiento {
-    background: #fff3cd;
-    border: 1px solid #ffeeba;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-  }
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  color: #111;
+}
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+}
+h1 {
+  font-size: 1.8rem;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+section {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+fieldset {
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+legend {
+  font-weight: 700;
+}
+label {
+  display: block;
+  margin: 0.4rem 0 0.2rem;
+}
+input[type=text], input[type=number], select, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+textarea {
+  min-height: 80px;
+}
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  background: #f9fafb;
+  transition: background 0.3s, border 0.3s, color 0.3s;
+  font-weight: 500;
+  cursor: pointer;
+}
+.chip input {
+  accent-color: #0284c7;
+}
+.envuelto-card {
+  border: 2px solid #bcdffb;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+  color: #111;
+}
+button {
+  background: #0284c7;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+button:hover {
+  background: #0369a1;
+}
+.note {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+}
+img.banner {
+  width: 100%;
+  border-radius: 10px;
+  margin: 1rem 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#consentimiento {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+#consentimiento button {
+  margin: 0.5rem;
+}
+.hidden {
+  display: none;
+}
 </style>
 </head>
 <body>
-<div class="container">
+<main>
+
+<!-- Pantalla de consentimiento -->
+<div id="consentimiento">
   <h1>Mapa de Envueltos Tradicionales del Ecuador</h1>
-  <h3>Cuestionario de entrevista semiestructurada</h3>
-  <div id="consentimiento" class="consentimiento">
-    <p>
-      La información recabada en esta entrevista será utilizada exclusivamente con fines académicos y de investigación.
-      Todos los datos proporcionados serán tratados de manera confidencial y no se divulgará información personal fuera del contexto de este estudio.
-    </p>
-    <label>¿Acepta participar en esta encuesta?</label>
-    <button id="acepta">✅ Sí, acepto</button>
-    <button id="noacepta" style="background:#ccc; color:#333;">❌ No, gracias</button>
-  </div>
-
-  <form id="formulario" style="display:none;">
-
-    <h2>Datos Generales</h2>
-    <label>Nombres completos</label>
-    <input type="text" id="nombres" required>
-
-    <label>Edad</label>
-    <input type="number" id="edad" required>
-
-    <label>Género</label>
-    <select id="genero" required>
-      <option value="">Seleccione...</option>
-      <option>Femenino</option>
-      <option>Masculino</option>
-      <option>Otro</option>
-    </select>
-
-    <label>Región</label>
-    <select id="region" required>
-      <option value="">Seleccione...</option>
-      <option>Costa</option>
-      <option>Sierra</option>
-      <option>Amazonia</option>
-      <option>Insular</option>
-    </select>
-
-    <label>Provincia</label>
-    <input type="text" id="provincia" required>
-
-    <label>Ciudad</label>
-    <input type="text" id="ciudad" required>
-
-    <label>Actividad principal / laboral</label>
-    <select id="actividad" required>
-      <option value="">Seleccione...</option>
-      <option>Cocinero/a tradicional</option>
-      <option>Docente de gastronomía</option>
-      <option>Promotor/a cultural</option>
-      <option>Chef</option>
-      <option>Otra</option>
-    </select>
-
-    <label>Tiempo de experiencia (en años)</label>
-    <input type="number" id="experiencia" required>
-
-    <h2>Información de los Envueltos</h2>
-    <p>Seleccione los envueltos que conoce o prepara:</p>
-    <div class="chips" id="chipsContainer">
-      <div class="chip">Humita</div>
-      <div class="chip">Chigüil</div>
-      <div class="chip">Tamal lojano</div>
-      <div class="chip">Tamales Pelileo</div>
-      <div class="chip">Tamal de mote</div>
-      <div class="chip">Tamales de zambo</div>
-      <div class="chip">Bollo de pescado</div>
-      <div class="chip">Tonga manaba</div>
-      <div class="chip">Tonga marinera</div>
-      <div class="chip">Maito de pescado</div>
-      <div class="chip">Maito de gallina</div>
-      <div class="chip">Maito de chontacuro</div>
-      <div class="chip">Pescado moqueado</div>
-      <div class="chip">Ayampaco</div>
-      <div class="chip">Dulce de guineo</div>
-      <div class="chip">Chivil</div>
-      <div class="chip">Vincundo / Putsucutanda</div>
-      <div class="chip">Arepa de zapallo</div>
-      <div class="chip">Timbulo</div>
-      <div class="chip">Quimbolito</div>
-      <div class="chip">Otros</div>
-    </div>
-
-    <div id="bloquesEnvueltos"></div>
-
-    <button type="submit">Enviar respuestas</button>
-    <div id="mensaje" class="mensaje"></div>
-  </form>
+  <img src="https://uploads.vibra.co/1/2021/09/como-hacer-envueltos-de-mazorca.jpg" alt="Envueltos tradicionales" class="banner">
+  <p><strong>Cuestionario de entrevista semiestructurada</strong></p>
+  <p>La información recabada será utilizada exclusivamente con fines académicos y de investigación. Todos los datos proporcionados serán tratados de manera confidencial y no se divulgará información personal fuera del contexto de este estudio.</p>
+  <p>¿Desea continuar con la encuesta?</p>
+  <button id="btnAceptar">Sí, deseo participar</button>
+  <button id="btnRechazar" style="background:#ccc;color:#000;">No deseo participar</button>
 </div>
 
+<!-- Formulario principal -->
+<form id="encuesta" class="hidden">
+  <section>
+    <h2>Datos generales</h2>
+    <div class="inline" style="flex-direction: column;">
+      <label>Nombres completos *</label><input type="text" name="nombres" required>
+      <label>Edad *</label><input type="number" name="edad" required>
+      <label>Género *</label>
+      <select name="genero" required>
+        <option value="">Seleccione</option>
+        <option>Femenino</option>
+        <option>Masculino</option>
+        <option>Otro</option>
+      </select>
+      <label>Región *</label>
+      <select name="region" required>
+        <option value="">Seleccione</option>
+        <option>Costa</option>
+        <option>Sierra</option>
+        <option>Amazonía</option>
+        <option>Insular</option>
+      </select>
+      <label>Provincia *</label><input type="text" name="provincia" required>
+      <label>Ciudad *</label><input type="text" name="ciudad" required>
+      <label>Actividad principal/laboral *</label>
+      <select name="actividad" required>
+        <option value="">Seleccione</option>
+        <option>Cocinero/a tradicional</option>
+        <option>Docente de gastronomía</option>
+        <option>Promotor/a cultural</option>
+        <option>Chef</option>
+      </select>
+      <label>Tiempo de experiencia *</label>
+      <input type="text" name="experiencia" required>
+    </div>
+  </section>
+
+  <section>
+    <h2>Información de los envueltos</h2>
+    <p>Seleccione los envueltos que conoce o prepara:</p>
+    <div id="lista-envueltos" class="inline"></div>
+    <div id="contenedor-envueltos"></div>
+  </section>
+
+  <button type="submit" id="btnEnviar">Enviar respuestas</button>
+  <div class="note">Tenga paciencia, el envío puede tardar algunos segundos.</div>
+</form>
+
+</main>
+
 <script>
-const consentimiento = document.getElementById("consentimiento");
-const formulario = document.getElementById("formulario");
-document.getElementById("acepta").onclick = () => {
-  consentimiento.style.display = "none";
-  formulario.style.display = "block";
-};
-document.getElementById("noacepta").onclick = () => {
-  consentimiento.innerHTML = "<p>Gracias por tu tiempo. No has aceptado participar en la encuesta.</p>";
-};
+const scriptURL = "https://script.google.com/macros/s/AKfycbzTdjIHxfGDPEQHWlmjakXSVP_YKfbAVO8LIOT9tFuPg05_NSPgsYkbbrcbS45W4fKx/exec";
 
-const chips = document.querySelectorAll(".chip");
-const contenedor = document.getElementById("bloquesEnvueltos");
-const form = document.getElementById("formulario");
-const mensaje = document.getElementById("mensaje");
-
-chips.forEach(chip => chip.addEventListener("click", () => {
-  chip.classList.toggle("active");
-  generarBloques();
-}));
-
-function generarBloques() {
-  contenedor.innerHTML = "";
-  const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
-  seleccionados.forEach(nombre => {
-    const bloque = document.createElement("div");
-    bloque.className = "bloque-envuelto";
-    bloque.innerHTML = `
-      <h3>${nombre}</h3>
-      <label>1️⃣ Tipo de masa/base</label>
-      <input type="text" name="masa-${nombre}" placeholder="Ej: Harina de maíz, arroz, zapallo...">
-
-      <label>2️⃣ Relleno que se utiliza</label>
-      <input type="text" name="relleno-${nombre}" placeholder="Ej: Queso, maní, pollo, etc.">
-
-      <label>3️⃣ Tipo de hoja que se usa</label>
-      <input type="text" name="hoja-${nombre}" placeholder="Ej: Achira, plátano, choclo...">
-
-      <label>4️⃣ Técnica de cocción</label>
-      <input type="text" name="tecnica-${nombre}" placeholder="Ej: Hervido, al vapor, al horno...">
-
-      <label>5️⃣ Herramienta usada</label>
-      <input type="text" name="herramienta-${nombre}" placeholder="Ej: Olla, paila, horno...">
-
-      <label>6️⃣ Formas de transmisión del conocimiento</label>
-      <input type="text" name="transmision-${nombre}" placeholder="Ej: Oral, talleres, recetas familiares...">
-
-      <label>7️⃣ Contexto en el que se prepara</label>
-      <input type="text" name="contexto-${nombre}" placeholder="Ej: Festivo, comercial, cotidiano...">
-    `;
-    contenedor.appendChild(bloque);
-  });
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
-
-  const data = {
-    nombres: document.getElementById("nombres").value,
-    edad: document.getElementById("edad").value,
-    genero: document.getElementById("genero").value,
-    region: document.getElementById("region").value,
-    provincia: document.getElementById("provincia").value,
-    ciudad: document.getElementById("ciudad").value,
-    actividad: document.getElementById("actividad").value,
-    experiencia: document.getElementById("experiencia").value,
-    envueltosSeleccionados: seleccionados
-  };
-
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-    mensaje.className = "mensaje ok";
-    mensaje.style.display = "block";
-    e.target.reset();
-    document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
-    contenedor.innerHTML = "";
-  } catch (err) {
-    mensaje.textContent = "⚠️ Error al conectar con el servidor. Verifica tu conexión o vuelve a intentarlo.";
-    mensaje.className = "mensaje error";
-    mensaje.style.display = "block";
-  }
+const ENVUELTOS = [
+  "Humita","Chigüil","Tamal lojano","Tamales Pelileo","Tamal de mote","Tamales de zambo",
+  "Bollo de pescado","Tonga manaba","Tonga marinera","Maito de pescado","Maito de gallina",
+  "Maito de chontacuro","Pescado moqueado / ahumado","Ayampaco","Dulce de guineo",
+  "Chivil","Vincundo / Putsucutanda","Arepa de zapallo","Timbulo","Quimbolito","Otros"
+];
+const colores = ["color-1","color-2","color-3","color-4","color-5","color-6","color-7"];
+const lista = document.getElementById("lista-envueltos");
+const contenedor = document.getElementById("contenedor-envueltos");
+ENVUELTOS.forEach((n,i)=>{
+  const lbl=document.createElement("label");
+  lbl.className="chip";
+  lbl.innerHTML=`<input type="checkbox" value="${n}"><span>${n}</span>`;
+  lista.appendChild(lbl);
 });
+lista.addEventListener("change",()=>{
+  contenedor.innerHTML="";
+  const seleccionados=[...lista.querySelectorAll("input:checked")].map(c=>c.value);
+  seleccionados.forEach((nombre,i)=>{
+    const div=document.createElement("div");
+    div.className=`envuelto-card ${colores[i%colores.length]}`;
+    let otrosExtra = "";
+    if(nombre==="Otros"){
+      otrosExtra = `<label>Especifique el nombre del otro envuelto:</label><input type="text" name="otro_nombre_${i}" required>`;
+    }
+    div.innerHTML=`
+      <fieldset><legend>${nombre}</legend>
+        ${otrosExtra}
+        <label>1. Tipo de masa/base:</label>
+        <textarea name="masa_${nombre}"></textarea>
+        <label>2. Relleno que se utiliza:</label>
+        <textarea name="relleno_${nombre}"></textarea>
+        <label>3. Tipo de hoja que se usa:</label>
+        <textarea name="hoja_${nombre}"></textarea>
+        <label>4. Técnica de cocción que se usa:</label>
+        <textarea name="coccion_${nombre}"></textarea>
+        <label>5. Herramienta que se usa:</label>
+        <textarea name="herramienta_${nombre}"></textarea>
+        <label>6. Formas de transmitir estos conocimientos:</label>
+        <textarea name="transmision_${nombre}"></textarea>
+        <label>7. Contexto en que se prepara:</label>
+        <textarea name="contexto_${nombre}"></textarea>
+      </fieldset>`;
+    contenedor.appendChild(div);
+  });
+});
+
+// === ENVÍO ===
+const form=document.getElementById("encuesta");
+form.addEventListener("submit", e=>{
+  e.preventDefault();
+  const btn=document.getElementById("btnEnviar");
+  btn.disabled=true;
+  btn.textContent="⏳ Enviando respuestas… por favor espere";
+  const formData=new FormData(form);
+  fetch(scriptURL,{method:"POST",body:formData})
+  .then(()=>{
+    alert("✅ ¡Gracias! Tus respuestas fueron enviadas correctamente.");
+    btn.disabled=false;
+    btn.textContent="Enviar respuestas";
+    form.reset();
+    contenedor.innerHTML="";
+  })
+  .catch(err=>{
+    alert("❌ Error al enviar: "+err.message);
+    btn.disabled=false;
+    btn.textContent="Enviar respuestas";
+  });
+});
+
+// === CONSENTIMIENTO ===
+document.getElementById("btnAceptar").onclick=()=>{
+  document.getElementById("consentimiento").classList.add("hidden");
+  document.getElementById("encuesta").classList.remove("hidden");
+};
+document.getElementById("btnRechazar").onclick=()=>{
+  alert("Gracias por su tiempo. No se registrarán datos.");
+};
 </script>
 </body>
 </html>
