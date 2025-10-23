@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mapa de Envueltos</title>
+  <title>Debug - Formulario Envueltos</title>
   <style>
     body {
       font-family: "Google Sans", Arial, sans-serif;
@@ -13,7 +13,7 @@
     }
     .container {
       background: white;
-      max-width: 750px;
+      max-width: 700px;
       margin: auto;
       padding: 30px;
       border-radius: 10px;
@@ -30,33 +30,13 @@
       margin-top: 20px;
       font-weight: bold;
     }
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-top: 6px;
       border: 1px solid #ddd;
       border-radius: 5px;
       font-size: 15px;
-    }
-    textarea { resize: vertical; }
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .chip {
-      padding: 10px 18px;
-      background: #f0f0f0;
-      border-radius: 25px;
-      cursor: pointer;
-      border: 1px solid #ccc;
-      transition: 0.3s;
-    }
-    .chip.active {
-      background: #4285F4;
-      color: white;
-      border-color: #4285F4;
     }
     button {
       background: #4285F4;
@@ -68,41 +48,24 @@
       margin-top: 25px;
       cursor: pointer;
     }
-    button:hover {
-      background: #3367d6;
-    }
-    .mensaje {
-      margin-top: 20px;
-      padding: 12px;
+    button:hover { background: #3367d6; }
+
+    .output {
+      margin-top: 25px;
+      background: #eee;
+      padding: 15px;
       border-radius: 6px;
-      display: none;
-      font-weight: bold;
-    }
-    .mensaje.ok {
-      background: #e6f4ea;
-      color: #137333;
-      border: 1px solid #b7dfb0;
-    }
-    .mensaje.error {
-      background: #fce8e6;
-      color: #c5221f;
-      border: 1px solid #f6aea9;
-    }
-    .bloque-envuelto {
-      margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #fafafa;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Formulario - Mapa de Envueltos</h1>
+    <h1>🧩 Debug Formulario Envueltos</h1>
     <form id="formulario">
-
-      <label>Nombre completo</label>
+      <label>Nombre</label>
       <input type="text" id="nombres" required>
 
       <label>Edad</label>
@@ -113,126 +76,52 @@
         <option value="">Seleccione...</option>
         <option>Femenino</option>
         <option>Masculino</option>
-        <option>Prefiero no decir</option>
+        <option>Otro</option>
       </select>
 
-      <label>Región</label>
-      <select id="region" required>
-        <option value="">Seleccione...</option>
-        <option>Costa</option>
-        <option>Sierra</option>
-        <option>Oriente</option>
-        <option>Insular</option>
-      </select>
-
-      <label>Provincia</label>
-      <input type="text" id="provincia" required>
-
-      <label>Ciudad</label>
-      <input type="text" id="ciudad" required>
-
-      <label>Actividad principal</label>
-      <input type="text" id="actividad" placeholder="Ej: Chef, ama de casa, estudiante..." required>
-
-      <label>Años de experiencia preparando envueltos</label>
-      <input type="number" id="experiencia" min="0" required>
-
-      <label>Seleccione los envueltos que conoce o prepara</label>
-      <div class="chips" id="chipsContainer">
-        <div class="chip">Humita</div>
-        <div class="chip">Chigüil</div>
-        <div class="chip">Quimbolito</div>
-        <div class="chip">Tamal serrano</div>
-        <div class="chip">Tamal lojano</div>
-        <div class="chip">Tamal manaba</div>
-        <div class="chip">Bollo de pescado</div>
-        <div class="chip">Ayaca</div>
-        <div class="chip">Muchín de yuca</div>
-        <div class="chip">Envueltos de verde</div>
-        <div class="chip">Envueltos de arroz</div>
-        <div class="chip">Otros</div>
-      </div>
-
-      <div id="bloquesEnvueltos"></div>
-
-      <button type="submit">Enviar respuestas</button>
-      <div id="mensaje" class="mensaje"></div>
-
+      <button type="submit">Enviar (Modo Debug)</button>
     </form>
+
+    <div class="output" id="resultado">Esperando envío...</div>
   </div>
 
   <script>
-    const chips = document.querySelectorAll(".chip");
-    const contenedor = document.getElementById("bloquesEnvueltos");
     const form = document.getElementById("formulario");
-    const mensaje = document.getElementById("mensaje");
-
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chip.classList.toggle("active");
-        generarBloques();
-      });
-    });
-
-    function generarBloques() {
-      contenedor.innerHTML = "";
-      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
-      seleccionados.forEach(nombre => {
-        const bloque = document.createElement("div");
-        bloque.className = "bloque-envuelto";
-        bloque.innerHTML = `
-          <h3>${nombre}</h3>
-          <label>¿Cuántas veces lo prepara al mes?</label>
-          <input type="number" name="frecuencia-${nombre}" required>
-
-          <label>¿Usa ingredientes tradicionales o innovadores?</label>
-          <textarea name="ingredientes-${nombre}" rows="2"></textarea>
-
-          <label>¿Dónde aprendió a prepararlo?</label>
-          <input type="text" name="aprendizaje-${nombre}">
-        `;
-        contenedor.appendChild(bloque);
-      });
-    }
+    const salida = document.getElementById("resultado");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
-
       const data = {
         nombres: document.getElementById("nombres").value,
         edad: document.getElementById("edad").value,
-        genero: document.getElementById("genero").value,
-        region: document.getElementById("region").value,
-        provincia: document.getElementById("provincia").value,
-        ciudad: document.getElementById("ciudad").value,
-        actividad: document.getElementById("actividad").value,
-        experiencia: document.getElementById("experiencia").value,
-        envueltosSeleccionados: seleccionados
+        genero: document.getElementById("genero").value
       };
 
+      salida.textContent = "⏳ Enviando datos al servidor...";
+
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbxlBXjSUvC-VklIoCluMHdVNGjCXWRZfzVc2sUmV20ysggD5VnaErxZZsXgaT8P5pQmQw/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec", {
           method: "POST",
-          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-        mensaje.className = "mensaje ok";
-        mensaje.style.display = "block";
-        e.target.reset();
-        document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
-        contenedor.innerHTML = "";
+        const texto = await res.text();
+
+        salida.textContent =
+          `✅ Respuesta del servidor:\n\n` +
+          `HTTP status: ${res.status}\n` +
+          `Status text: ${res.statusText}\n\n` +
+          `Body:\n${texto}`;
 
       } catch (err) {
-        mensaje.textContent = "❌ Error al conectar con el servidor. Verifica la conexión o permisos.";
-        mensaje.className = "mensaje error";
-        mensaje.style.display = "block";
+        salida.textContent =
+          `❌ Error al conectar con el servidor.\n\n` +
+          `Mensaje: ${err.message}\n\n` +
+          `Posible causa:\n- CORS bloqueado\n- Permisos del Web App\n- URL incorrecta o no pública`;
       }
     });
   </script>
 </body>
-</html
+</html>
