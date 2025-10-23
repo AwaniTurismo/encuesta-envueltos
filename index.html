@@ -1,244 +1,204 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mapa de Envueltos Tradicionales del Ecuador</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Envueltos</title>
   <style>
     body {
-      font-family: "Google Sans", Roboto, Arial, sans-serif;
+      font-family: "Google Sans", Arial, sans-serif;
       background: #f7f9fc;
       margin: 0;
-      color: #222;
+      padding: 40px;
     }
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
+    .container {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      padding: 2rem;
+      max-width: 750px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      color: #1a73e8;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    section {
-      margin-bottom: 1.8rem;
-      border-top: 1px solid #eee;
-      padding-top: 1rem;
+      font-size: 22px;
+      border-left: 4px solid #4285F4;
+      padding-left: 10px;
+      color: #333;
     }
     label {
       display: block;
-      margin: 0.5rem 0 0.2rem;
-      font-weight: 500;
+      margin-top: 20px;
+      font-weight: bold;
     }
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 15px;
     }
+    textarea { resize: vertical; }
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 10px;
+      margin-top: 10px;
     }
     .chip {
-      background: #f1f3f4;
-      border-radius: 999px;
-      padding: 0.4rem 0.9rem;
+      padding: 10px 18px;
+      background: #f0f0f0;
+      border-radius: 25px;
       cursor: pointer;
-      border: 1px solid transparent;
+      border: 1px solid #ccc;
+      transition: 0.3s;
     }
     .chip.active {
-      background: #1a73e8;
+      background: #4285F4;
       color: white;
+      border-color: #4285F4;
     }
     button {
-      display: block;
-      width: 100%;
-      background: #1a73e8;
+      background: #4285F4;
       color: white;
+      padding: 12px 25px;
       border: none;
-      padding: 0.8rem;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 25px;
       cursor: pointer;
     }
     button:hover {
-      background: #155acb;
-    }
-    fieldset {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
-    legend {
-      font-weight: 600;
-      color: #1a73e8;
+      background: #3367d6;
     }
     .mensaje {
-      text-align: center;
-      margin-top: 1rem;
-      padding: 0.8rem;
+      margin-top: 20px;
+      padding: 12px;
       border-radius: 6px;
       display: none;
+      font-weight: bold;
     }
     .mensaje.ok {
       background: #e6f4ea;
       color: #137333;
+      border: 1px solid #b7dfb0;
     }
     .mensaje.error {
       background: #fce8e6;
-      color: #b3261e;
+      color: #c5221f;
+      border: 1px solid #f6aea9;
+    }
+    .bloque-envuelto {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fafafa;
     }
   </style>
 </head>
-
 <body>
-  <main>
-    <h1>Mapa de Envueltos Tradicionales del Ecuador</h1>
-    <p>Por favor, completa la siguiente encuesta. Los datos son confidenciales y se usarán solo con fines académicos.</p>
+  <div class="container">
+    <h1>Formulario - Mapa de Envueltos</h1>
+    <form id="formulario">
 
-    <form id="encuesta">
-      <section>
-        <label>Nombres completos *</label>
-        <input type="text" id="nombres" required />
+      <label>Nombre completo</label>
+      <input type="text" id="nombres" required>
 
-        <label>Edad *</label>
-        <input type="number" id="edad" required />
+      <label>Edad</label>
+      <input type="number" id="edad" required>
 
-        <label>Género *</label>
-        <select id="genero" required>
-          <option value="">Seleccione</option>
-          <option>Femenino</option>
-          <option>Masculino</option>
-          <option>Otro</option>
-        </select>
+      <label>Género</label>
+      <select id="genero" required>
+        <option value="">Seleccione...</option>
+        <option>Femenino</option>
+        <option>Masculino</option>
+        <option>Prefiero no decir</option>
+      </select>
 
-        <label>Región *</label>
-        <select id="region" required>
-          <option value="">Seleccione</option>
-          <option>Costa</option>
-          <option>Sierra</option>
-          <option>Amazonía</option>
-          <option>Insular</option>
-        </select>
+      <label>Región</label>
+      <select id="region" required>
+        <option value="">Seleccione...</option>
+        <option>Costa</option>
+        <option>Sierra</option>
+        <option>Oriente</option>
+        <option>Insular</option>
+      </select>
 
-        <label>Provincia *</label>
-        <input type="text" id="provincia" required />
+      <label>Provincia</label>
+      <input type="text" id="provincia" required>
 
-        <label>Ciudad *</label>
-        <input type="text" id="ciudad" required />
+      <label>Ciudad</label>
+      <input type="text" id="ciudad" required>
 
-        <label>Actividad principal *</label>
-        <select id="actividad" required>
-          <option value="">Seleccione</option>
-          <option>Cocinero/a tradicional</option>
-          <option>Docente de gastronomía</option>
-          <option>Promotor/a cultural</option>
-          <option>Chef</option>
-        </select>
+      <label>Actividad principal</label>
+      <input type="text" id="actividad" placeholder="Ej: Chef, ama de casa, estudiante..." required>
 
-        <label>Tiempo de experiencia *</label>
-        <input type="text" id="experiencia" required />
-      </section>
+      <label>Años de experiencia preparando envueltos</label>
+      <input type="number" id="experiencia" min="0" required>
 
-      <section>
-        <h3>Seleccione los envueltos que conoce o prepara</h3>
-        <div id="chips" class="chips"></div>
-        <input type="text" id="otros" placeholder="Otros (separe con comas)" />
-        <div id="contenedor-envueltos"></div>
-      </section>
+      <label>Seleccione los envueltos que conoce o prepara</label>
+      <div class="chips" id="chipsContainer">
+        <div class="chip">Humita</div>
+        <div class="chip">Chigüil</div>
+        <div class="chip">Quimbolito</div>
+        <div class="chip">Tamal serrano</div>
+        <div class="chip">Tamal lojano</div>
+        <div class="chip">Tamal manaba</div>
+        <div class="chip">Bollo de pescado</div>
+        <div class="chip">Ayaca</div>
+        <div class="chip">Muchín de yuca</div>
+        <div class="chip">Envueltos de verde</div>
+        <div class="chip">Envueltos de arroz</div>
+        <div class="chip">Otros</div>
+      </div>
+
+      <div id="bloquesEnvueltos"></div>
 
       <button type="submit">Enviar respuestas</button>
       <div id="mensaje" class="mensaje"></div>
+
     </form>
-  </main>
+  </div>
 
   <script>
-    const ENVUELTOS = [
-      "Humita",
-      "Chigüil",
-      "Quimbolito",
-      "Tamal serrano",
-      "Tamal lojano",
-      "Tamal manaba",
-      "Bollo de pescado",
-      "Ayaca",
-      "Muchín de yuca",
-      "Envuelto de verde",
-      "Envuelto de arroz"
-    ];
-
-    const chipsContainer = document.getElementById("chips");
-    const contenedor = document.getElementById("contenedor-envueltos");
+    const chips = document.querySelectorAll(".chip");
+    const contenedor = document.getElementById("bloquesEnvueltos");
+    const form = document.getElementById("formulario");
     const mensaje = document.getElementById("mensaje");
 
-    ENVUELTOS.forEach(env => {
-      const chip = document.createElement("div");
-      chip.className = "chip";
-      chip.textContent = env;
+    chips.forEach(chip => {
       chip.addEventListener("click", () => {
         chip.classList.toggle("active");
-        actualizar();
+        generarBloques();
       });
-      chipsContainer.appendChild(chip);
     });
 
-    document.getElementById("otros").addEventListener("input", actualizar);
-
-    function actualizar() {
+    function generarBloques() {
       contenedor.innerHTML = "";
-      const seleccionados = [
-        ...document.querySelectorAll(".chip.active")
-      ].map(ch => ch.textContent);
+      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
+      seleccionados.forEach(nombre => {
+        const bloque = document.createElement("div");
+        bloque.className = "bloque-envuelto";
+        bloque.innerHTML = `
+          <h3>${nombre}</h3>
+          <label>¿Cuántas veces lo prepara al mes?</label>
+          <input type="number" name="frecuencia-${nombre}" required>
 
-      const otros = document.getElementById("otros").value
-        .split(",")
-        .map(x => x.trim())
-        .filter(Boolean);
+          <label>¿Usa ingredientes tradicionales o innovadores?</label>
+          <textarea name="ingredientes-${nombre}" rows="2"></textarea>
 
-      const total = [...seleccionados, ...otros];
-
-      total.forEach(nombre => {
-        const f = document.createElement("fieldset");
-        f.innerHTML = `
-          <legend>${nombre}</legend>
-          <label>Tipo de masa/base</label>
-          <input type="text" placeholder="Ejemplo: maíz, yuca, verde">
-          <label>Relleno que se utiliza</label>
-          <input type="text" placeholder="Ejemplo: queso, carne, pescado">
-          <label>Tipo de hoja que se usa</label>
-          <input type="text" placeholder="Ejemplo: achira, plátano, maíz">
-          <label>Técnica de cocción</label>
-          <input type="text" placeholder="Ejemplo: hervido, al vapor, al rescoldo">
-          <label>Herramientas empleadas</label>
-          <input type="text" placeholder="Ejemplo: olla, vaporera, paila">
-          <label>Formas de transmisión del conocimiento</label>
-          <input type="text" placeholder="Ejemplo: oral, talleres, familiar">
-          <label>Contexto tradicional de preparación</label>
-          <textarea placeholder="Ejemplo: fiestas, reuniones familiares, ventas locales"></textarea>
+          <label>¿Dónde aprendió a prepararlo?</label>
+          <input type="text" name="aprendizaje-${nombre}">
         `;
-        contenedor.appendChild(f);
+        contenedor.appendChild(bloque);
       });
     }
 
-    document.getElementById("encuesta").addEventListener("submit", async e => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      mensaje.style.display = "none";
+
+      const seleccionados = [...document.querySelectorAll(".chip.active")].map(c => c.textContent);
 
       const data = {
         nombres: document.getElementById("nombres").value,
@@ -249,47 +209,30 @@
         ciudad: document.getElementById("ciudad").value,
         actividad: document.getElementById("actividad").value,
         experiencia: document.getElementById("experiencia").value,
-        envueltosSeleccionados: [],
-        respuestasPorEnvuelto: {}
+        envueltosSeleccionados: seleccionados
       };
-
-      const activos = [...document.querySelectorAll(".chip.active")].map(ch => ch.textContent);
-      const otros = document.getElementById("otros").value.split(",").map(x => x.trim()).filter(Boolean);
-      data.envueltosSeleccionados = [...activos, ...otros];
-
-      document.querySelectorAll("#contenedor-envueltos fieldset").forEach(f => {
-        const nombre = f.querySelector("legend").textContent;
-        const respuestas = {};
-        f.querySelectorAll("input, textarea").forEach(inp => {
-          respuestas[inp.previousElementSibling?.textContent || "campo"] = inp.value;
-        });
-        data.respuestasPorEnvuelto[nombre] = respuestas;
-      });
 
       try {
         const res = await fetch("https://script.google.com/macros/s/AKfycbxlBXjSUvC-VklIoCluMHdVNGjCXWRZfzVc2sUmV20ysggD5VnaErxZZsXgaT8P5pQmQw/exec", {
           method: "POST",
+          mode: "no-cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        const json = await res.json();
-        if (json.success) {
-          mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-          mensaje.className = "mensaje ok";
-          e.target.reset();
-          document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
-          contenedor.innerHTML = "";
-        } else {
-          throw new Error(json.error);
-        }
+        mensaje.textContent = "✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
+        mensaje.className = "mensaje ok";
+        mensaje.style.display = "block";
+        e.target.reset();
+        document.querySelectorAll(".chip").forEach(ch => ch.classList.remove("active"));
+        contenedor.innerHTML = "";
+
       } catch (err) {
         mensaje.textContent = "❌ Error al conectar con el servidor. Verifica la conexión o permisos.";
         mensaje.className = "mensaje error";
+        mensaje.style.display = "block";
       }
-
-      mensaje.style.display = "block";
     });
   </script>
 </body>
-</html>
+</html
