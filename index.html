@@ -3,526 +3,196 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mapa de envueltos tradicionales del Ecuador — Encuesta</title>
+<title>Mapa de envueltos tradicionales del Ecuador — Encuesta V.4.0</title>
 <style>
-  :root{
-    --pri:#1f4e79;        /* azul institucional */
-    --pri-600:#163a5a;
-    --acc:#f4c430;        /* maíz */
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --ink:#1c1c1c;
-    --muted:#5c6b7a;
-    --ok:#137333;
-    --err:#b3261e;
-  }
-  html,body{margin:0}
-  body{
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background:var(--bg);
-    color:var(--ink);
-    line-height:1.5;
-  }
-  header{
-    position:relative;
-    overflow:hidden;
-    border-bottom:4px solid var(--acc);
-  }
-  header img{
-    width:100%; height:260px; object-fit:cover; filter:contrast(.95) saturate(1.05);
-  }
-  header .title{
-    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.35));
-    color:#fff; text-align:center; padding:1rem;
-  }
-  header h1{margin:.2rem 0; font-size:clamp(1.2rem,2.5vw,1.8rem)}
-  header p{opacity:.95; margin:0; font-size:clamp(.9rem,2vw,1rem)}
-  main{
-    max-width:980px; margin:auto; padding:clamp(16px,3vw,28px);
-  }
-  .card{
-    background:var(--card);
-    border:1px solid #e5e9f2;
-    border-radius:14px;
-    box-shadow:0 2px 8px rgba(16,24,40,.04);
-    padding:clamp(16px,3vw,28px);
-    margin:18px 0;
-  }
-  h2{color:var(--pri); font-size:1.2rem; margin:.2rem 0 1rem}
-  h3{color:var(--pri); font-size:1.05rem; margin:1rem 0 .5rem}
-  label{font-weight:600; display:block; margin:.7rem 0 .3rem}
-  .muted{color:var(--muted); font-size:.95rem}
-  input[type=text],input[type=number],select,textarea{
-    width:100%; padding:.65rem .75rem; border:1px solid #cfd7e3; border-radius:10px; font-size:1rem; background:#fff;
-  }
-  textarea{min-height:84px; resize:vertical}
-  .grid{display:grid; gap:14px}
-  .g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-  .checklist{display:grid; gap:.4rem; margin:.4rem 0}
-  .check{display:flex; align-items:flex-start; gap:.55rem}
-  .check input[type=checkbox]{transform:translateY(2px)}
-  .inline{display:flex; gap:.6rem; align-items:center; flex-wrap:wrap}
-  .info{background:#f8fafc; border:1px dashed #d8e1ee; border-radius:10px; padding:.8rem}
-  fieldset.envuelto{
-    border:1px solid #e2e8f5; border-left:6px solid var(--pri); border-radius:12px; padding:1rem; margin:1rem 0 1.2rem;
-    background:#fbfdff;
-  }
-  fieldset.envuelto legend{font-weight:700; color:var(--pri); padding:0 .3rem}
-  .row{display:grid; gap:1rem}
-  .row.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .otros-wrap{display:flex; gap:.5rem; align-items:center; margin-left:1.7rem}
-  .acciones{display:flex; gap:.6rem; flex-wrap:wrap}
-  button{
-    all:unset; display:inline-block; cursor:pointer; user-select:none;
-    background:var(--pri); color:#fff; padding:.75rem 1.1rem; border-radius:10px; font-weight:600;
-  }
-  button.secondary{background:#eef2f8; color:#182335}
-  button:hover{background:var(--pri-600)}
-  button.secondary:hover{background:#e5ebf4}
-  .msg{display:none; margin-top:.8rem; padding:.75rem .9rem; border-radius:10px; font-weight:600}
-  .msg.ok{display:block; background:#e6f4ea; color:var(--ok); border:1px solid #c7e7cd}
-  .msg.err{display:block; background:#fce8e6; color:var(--err); border:1px solid #f4b7b1}
-  .hidden{display:none !important}
+:root{
+  --pri:#1f4e79; --pri-600:#163a5a;
+  --acc:#f4c430; --bg:#f5f7fb;
+  --card:#ffffff; --ink:#1c1c1c;
+  --muted:#5c6b7a; --ok:#137333; --err:#b3261e;
+}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{position:relative;overflow:hidden;border-bottom:4px solid var(--acc)}
+header img{width:100%;height:260px;object-fit:cover;filter:contrast(.95) saturate(1.05)}
+header .title{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.35));color:#fff;text-align:center;padding:1rem}
+header h1{margin:.2rem 0;font-size:clamp(1.2rem,2.5vw,1.8rem)}
+header p{opacity:.95;margin:0;font-size:clamp(.9rem,2vw,1rem)}
+main{max-width:980px;margin:auto;padding:clamp(16px,3vw,28px)}
+.card{background:var(--card);border:1px solid #e5e9f2;border-radius:14px;box-shadow:0 2px 8px rgba(16,24,40,.04);
+  padding:clamp(16px,3vw,28px);margin:18px 0}
+h2{color:var(--pri);font-size:1.2rem;margin:.2rem 0 1rem}
+h3{color:var(--pri);font-size:1.05rem;margin:1rem 0 .5rem}
+label{font-weight:600;display:block;margin:.7rem 0 .3rem}
+.muted{color:var(--muted);font-size:.95rem}
+input[type=text],input[type=number],select,textarea{
+  width:100%;padding:.65rem .75rem;border:1px solid #cfd7e3;border-radius:10px;font-size:1rem;background:#fff}
+textarea{min-height:84px;resize:vertical}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.checklist{display:grid;gap:.4rem;margin:.4rem 0}
+.check{display:flex;align-items:flex-start;gap:.55rem}
+.check input[type=checkbox],.check input[type=radio]{transform:translateY(2px)}
+.otros-wrap{display:flex;gap:.5rem;align-items:center;margin-left:1.7rem}
+.acciones{display:flex;gap:.6rem;flex-wrap:wrap}
+button{all:unset;display:inline-block;cursor:pointer;user-select:none;background:var(--pri);color:#fff;
+  padding:.75rem 1.1rem;border-radius:10px;font-weight:600}
+button.secondary{background:#eef2f8;color:#182335}
+button:hover{background:var(--pri-600)}button.secondary:hover{background:#e5ebf4}
+.msg{display:none;margin-top:.8rem;padding:.75rem .9rem;border-radius:10px;font-weight:600}
+.msg.ok{display:block;background:#e6f4ea;color:var(--ok);border:1px solid #c7e7cd}
+.msg.err{display:block;background:#fce8e6;color:var(--err);border:1px solid #f4b7b1}
+.hidden{display:none!important}
+fieldset.envuelto{border:1px solid #e2e8f5;border-left:6px solid var(--pri);border-radius:12px;padding:1rem;margin:1rem 0 1.2rem;background:#fbfdff}
+fieldset.envuelto legend{font-weight:700;color:var(--pri)}
 </style>
 </head>
 <body>
 
-<header aria-label="Portada">
+<header>
   <img src="https://uploads.vibra.co/1/2021/09/como-hacer-envueltos-de-mazorca.jpg" alt="Envueltos tradicionales de maíz">
-  <div class="title" role="img" aria-label="Mapa de envueltos tradicionales del Ecuador">
-    <div>
-      <h1>Mapa de envueltos tradicionales del Ecuador</h1>
-      <p>Cuestionario de entrevista semiestructurada</p>
-    </div>
-  </div>
+  <div class="title"><div>
+    <h1>Mapa de envueltos tradicionales del Ecuador</h1>
+    <p>Encuesta de investigación gastronómica</p>
+  </div></div>
 </header>
 
 <main>
-  <!-- Consentimiento -->
-  <section id="consent-card" class="card" aria-labelledby="consent-title">
-    <h2 id="consent-title">Política de consentimiento</h2>
-    <p class="muted">
-      La información recabada en esta entrevista será utilizada exclusivamente con fines académicos y de investigación.
-      Todos los datos proporcionados serán tratados de manera confidencial y asegurando que no se divulgará información
-      personal fuera del contexto de este estudio.
-    </p>
-    <div class="acciones" style="margin-top:.6rem">
-      <button id="btn-acepto" aria-controls="form-card" aria-expanded="false">✅ Sí, acepto participar</button>
+  <!-- CONSENTIMIENTO -->
+  <section id="consent-card" class="card">
+    <h2>Política y Privacidad</h2>
+    <p>La presente encuesta es un trabajo de investigación en el cual se busca conocer los distintos tipos de envueltos elaborados en cada región del país, cuyo objetivo es documentar, preservar y visibilizar la diversidad de envueltos que forman parte del patrimonio culinario ecuatoriano.</p>
+    <p>Su participación en esta encuesta es completamente voluntaria y libre. Al continuar, usted manifiesta su consentimiento informado para participar en este estudio comprendiendo que la información recabada será utilizada exclusivamente con fines académicos y de investigación. Todos los datos serán tratados de manera confidencial y no se divulgará información personal fuera del contexto de este estudio.</p>
+    <div class="acciones">
+      <button id="btn-acepto">✅ Sí, acepto participar</button>
       <button class="secondary" id="btn-noacepto">❌ No, gracias</button>
     </div>
     <div id="consent-msg" class="msg"></div>
   </section>
 
-  <!-- Formulario -->
-  <form id="form" class="card hidden" aria-live="polite">
-    <!-- Datos generales -->
-    <section aria-labelledby="dg-title">
-      <h2 id="dg-title">Datos Generales</h2>
-      <div class="grid g2">
-        <div>
-          <label for="nombres">Nombres completos *</label>
-          <input id="nombres" name="nombres" type="text" required autocomplete="name">
-        </div>
-        <div>
-          <label for="edad">Edad *</label>
-          <input id="edad" name="edad" type="number" min="0" required>
-        </div>
-        <div>
-          <label for="genero">Género *</label>
-          <select id="genero" name="genero" required>
-            <option value="">Seleccione</option>
-            <option>Femenino</option>
-            <option>Masculino</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div>
-          <label for="region">Región *</label>
-          <select id="region" name="region" required>
-            <option value="">Seleccione</option>
-            <option>Costa</option>
-            <option>Sierra</option>
-            <option>Amazonia</option>
-            <option>Insular</option>
-          </select>
-        </div>
-        <div>
-          <label for="provincia">Provincia *</label>
-          <input id="provincia" name="provincia" type="text" required>
-        </div>
-        <div>
-          <label for="ciudad">Ciudad *</label>
-          <input id="ciudad" name="ciudad" type="text" required>
-        </div>
-        <div>
-          <label for="actividad">Actividad principal/laboral *</label>
-          <select id="actividad" name="actividad" required>
-            <option value="">Seleccione</option>
-            <option>Cocinero/a tradicional</option>
-            <option>Docente de gastronomía</option>
-            <option>Promotor/a cultural</option>
-            <option>Chef</option>
-          </select>
-        </div>
-        <div>
-          <label for="experiencia">Tiempo de experiencia *</label>
-          <input id="experiencia" name="experiencia" type="text" placeholder="Ej.: 10 años" required>
-        </div>
-      </div>
-    </section>
-
-    <!-- Envueltos -->
-    <section aria-labelledby="env-title">
-      <h2 id="env-title">Información de los envueltos</h2>
-      <p class="muted">Seleccione uno o varios envueltos que conoce o prepara. Se generará un cuestionario por cada selección.</p>
-
-      <div class="card" style="padding:1rem">
-        <h3>Nombre del envuelto (opción múltiple)</h3>
-        <div id="envueltos-list" class="checklist" role="group" aria-label="Envueltos">
-          <!-- se inyectan checkboxes desde JS -->
-        </div>
-        <div class="otros-wrap">
-          <label for="env-otros" style="margin:0; font-weight:600">Otros:</label>
-          <input id="env-otros" type="text" placeholder="Especifique otro envuelto (si aplica)" aria-describedby="env-otros-help">
-        </div>
-        <div id="env-otros-help" class="muted">Si escribe aquí, también se creará su cuestionario.</div>
-      </div>
-
-      <div id="bloques" aria-live="polite"></div>
-    </section>
-
-    <!-- Cierre -->
-    <section aria-labelledby=" cierre-title">
-      <h2 id="cierre-title">Sección de cierre</h2>
-      <h3>8) ¿Quiénes transmiten estos conocimientos? (opción múltiple)</h3>
-      <div class="checklist" id="transmisores-list">
-        <!-- checkboxes -->
-      </div>
-
-      <h3>9) ¿Qué ingredientes de este envuelto varían según la región?</h3>
-      <textarea id="variaciones" name="variaciones" placeholder="Masa, relleno, tipo de hoja, etc."></textarea>
-
-      <h3>10) ¿Ha observado transformaciones en la forma de preparar o consumir los envueltos?</h3>
-      <textarea id="transformaciones" name="transformaciones" placeholder="Describa qué ha cambiado y cómo."></textarea>
-
-      <h3>11) ¿Qué estrategias utiliza para conservar y transmitir estos conocimientos?</h3>
-      <textarea id="estrategias" name="estrategias" placeholder="Ej.: práctica familiar, talleres, recetarios..."></textarea>
-    </section>
-
-    <div class="acciones">
-      <button type="submit" id="btn-enviar">Enviar respuestas</button>
-      <div id="form-msg" class="msg" role="status" aria-live="polite"></div>
+  <!-- FORMULARIO -->
+  <form id="form" class="card hidden">
+    <!-- SECCIÓN I -->
+    <h2>SECCIÓN I: Datos Generales</h2>
+    <h3>Seleccione el rango de edad al que pertenece</h3>
+    <div class="checklist">
+      <label><input type="radio" name="edad" value="18–27 años (Gen Z)">18–27 años (Generación Z)</label>
+      <label><input type="radio" name="edad" value="28–43 años (Millennials)">28–43 años (Millennials)</label>
+      <label><input type="radio" name="edad" value="44–59 años (Gen X)">44–59 años (Generación X)</label>
+      <label><input type="radio" name="edad" value="60–74 años (Baby Boomers)">60–74 años (Baby Boomers)</label>
+      <label><input type="radio" name="edad" value="75 años o más (Gen Silenciosa)">75 años o más (Generación Silenciosa)</label>
     </div>
+
+    <h3>Género</h3>
+    <div class="checklist">
+      <label><input type="radio" name="genero" value="Femenino">Femenino</label>
+      <label><input type="radio" name="genero" value="Masculino">Masculino</label>
+      <label><input type="radio" name="genero" value="Otro">Otro</label>
+    </div>
+
+    <h3>Región (opción múltiple)</h3>
+    <div class="checklist">
+      <label><input type="checkbox" name="region" value="Costa">Costa</label>
+      <label><input type="checkbox" name="region" value="Sierra">Sierra</label>
+      <label><input type="checkbox" name="region" value="Amazonia">Amazonia</label>
+      <label><input type="checkbox" name="region" value="Insular">Insular</label>
+    </div>
+
+    <div class="grid g2">
+      <div><label for="provincia">Provincia</label><input id="provincia" name="provincia"></div>
+      <div><label for="ciudad">Ciudad</label><input id="ciudad" name="ciudad"></div>
+    </div>
+
+    <h3>Actividad principal o laboral</h3>
+    <div class="checklist">
+      <label><input type="checkbox" name="actividad" value="Cocinero/a tradicional">Cocinero/a tradicional</label>
+      <label><input type="checkbox" name="actividad" value="Docente de gastronomía">Docente de gastronomía</label>
+      <label><input type="checkbox" name="actividad" value="Promotor/a cultural o turístico">Promotor/a cultural o turístico</label>
+      <label><input type="checkbox" name="actividad" value="Chef profesional">Chef profesional</label>
+      <label><input type="checkbox" name="actividad" value="Emprendedor/a o propietario de negocio">Emprendedor/a o propietario de negocio gastronómico</label>
+    </div>
+
+    <h3>Años de experiencia en la actividad gastronómica</h3>
+    <div class="checklist">
+      <label><input type="radio" name="experiencia" value="Menos de 1 año">Menos de 1 año</label>
+      <label><input type="radio" name="experiencia" value="1–3 años">1 a 3 años</label>
+      <label><input type="radio" name="experiencia" value="4–6 años">4 a 6 años</label>
+      <label><input type="radio" name="experiencia" value="7–10 años">7 a 10 años</label>
+      <label><input type="radio" name="experiencia" value="Más de 10 años">Más de 10 años</label>
+    </div>
+
+    <!-- SECCIÓN II -->
+    <h2>SECCIÓN II: Envueltos</h2>
+    <p>Seleccione 1 o más envueltos representativos de su región o provincia.</p>
+    <div id="envueltos-list" class="checklist"></div>
+    <div class="otros-wrap"><label>Otros:</label><input id="env-otros" type="text" placeholder="Especifique"></div>
+    <div id="bloques"></div>
+
+    <!-- SECCIÓN III -->
+    <h2>SECCIÓN III: Estrategias</h2>
+    <h3>8) ¿Qué estrategias utiliza o ha utilizado para conservar y transmitir los conocimientos sobre la preparación de envueltos?</h3>
+    <div class="checklist">
+      <label><input type="checkbox" name="estrategias" value="Talleres de cocina o demostraciones prácticas">Talleres o demostraciones prácticas</label>
+      <label><input type="checkbox" name="estrategias" value="Transmisión en el hogar (enseñanza familiar)">Transmisión en el hogar</label>
+      <label><input type="checkbox" name="estrategias" value="Actividades comunitarias o ferias gastronómicas">Actividades comunitarias / ferias</label>
+      <label><input type="checkbox" name="estrategias" value="Docencia en instituciones educativas">Docencia en instituciones educativas</label>
+      <label><input type="checkbox" name="estrategias" value="Publicaciones o material escrito">Publicaciones o material escrito</label>
+      <label><input type="checkbox" name="estrategias" value="Uso de medios digitales">Uso de medios digitales</label>
+      <label><input type="checkbox" name="estrategias" value="Otro">Otro (especifique): <input type="text" name="estrategias_otro" style="width:60%"></label>
+    </div>
+
+    <div class="acciones"><button type="submit">Enviar respuestas</button><div id="form-msg" class="msg"></div></div>
   </form>
 </main>
 
 <script>
-/* ------------------ CONSENTIMIENTO ------------------ */
-const consentCard = document.getElementById('consent-card');
-const formCard = document.getElementById('form');
-const consentMsg = document.getElementById('consent-msg');
-document.getElementById('btn-acepto').addEventListener('click', ()=>{
-  consentCard.classList.add('hidden');
-  formCard.classList.remove('hidden');
-});
-document.getElementById('btn-noacepto').addEventListener('click', ()=>{
-  consentMsg.textContent = "Has decidido no participar. Gracias por tu tiempo.";
-  consentMsg.className = "msg err";
-});
+document.addEventListener("DOMContentLoaded",()=>{
+/* consentimiento */
+const btnYes=document.getElementById("btn-acepto"),btnNo=document.getElementById("btn-noacepto"),
+card=document.getElementById("consent-card"),form=document.getElementById("form"),msg=document.getElementById("consent-msg");
+btnYes.onclick=()=>{card.classList.add("hidden");form.classList.remove("hidden")};
+btnNo.onclick=()=>{msg.textContent="Has decidido no participar. Gracias por tu tiempo.";msg.className="msg err"};
 
-/* ------------------ LISTAS BASE ------------------ */
-const LISTA_ENVUELTOS = [
- "Humita","Chigüil","Tamal lojano","Tamales Pelileo","Tamal de mote","Tamales de zambo",
- "Bollo de pescado","Tonga manaba","Tonga marinera","Maito de pescado","Maito de gallina",
- "Maito de chontacuro","Pescado moqueado / ahumado","Ayampaco","Dulce de guineo","Chivil",
- "Vincundo / Putsucutanda","Arepa de zapallo","Timbulo","Quimbolito"
-];
-const PREGUNTAS = {
-  masa: ["Harina de maíz","Harina de trigo","Arroz","Yuca","Verde/plátano","Zambo","Mote","Maíz/choclo tierno","Guineo/plátano maduro","Zapallo","Otros"],
-  relleno: ["Carne de cerdo","Carne de res","Gallina","Pollo","Pescado","Pulpo","Calamar","Camarón","Chontacuro","Queso","Maní","Pasas","Higos en conserva","Dulce de leche","Panela","Sin relleno","Otros"],
-  hoja: ["Hoja de achira","Hoja de bijao","Hoja de la planta de maíz","Hoja de huicundo","Hoja de plátano (fresca)","Hoja de plátano (seca)","Hoja de choclo (fresca)","Hoja de choclo (seca)","Otros"],
-  tecnica: ["Hervido","Al vapor","Cocción lenta","Al horno (industrial)","Al horno (manaba)","Al rescoldo / brasa","Baño maría","Bajo tierra","Otros"],
-  herramienta: ["Olla vaporera / tamalera","Olla de barro","Lata para horno","Ollas","Paila","Parrilla","Otros"],
-  transmision: ["Oral","Visual","Libro de recetas","Práctica familiar","Talleres culinarios","Otros"]
-};
-const TRANSMISORES = [
-  "Docentes o estudiantes de gastronomía",
-  "Instituciones educativas",
-  "Cocineros/as tradicionales",
-  "Madres/abuelas",
-  "Museos gastronómicos",
-  "Medios digitales",
-  "Otros"
-];
-
-/* ------------------ RENDER ENVUELTOS ------------------ */
-const envList = document.getElementById('envueltos-list');
-LISTA_ENVUELTOS.forEach((n,i)=>{
-  const id = `env_${i}`;
-  const wrap = document.createElement('div');
-  wrap.className = "check";
-  wrap.innerHTML = `
-    <input type="checkbox" id="${id}" value="${n}" />
-    <label for="${id}">${n}</label>
-  `;
-  envList.appendChild(wrap);
-});
-const envOtrosInput = document.getElementById('env-otros');
-
-const bloques = document.getElementById('bloques');
-envList.addEventListener('change', actualizarBloques);
-envOtrosInput.addEventListener('input', actualizarBloques);
-
-function actualizarBloques(){
-  const seleccionados = [...envList.querySelectorAll('input:checked')].map(i=>i.value);
-  const otrosTexto = envOtrosInput.value.trim();
-  const total = otrosTexto ? [...seleccionados, `Otros: ${otrosTexto}`] : seleccionados;
-
-  bloques.innerHTML = "";
-  total.forEach((nombre,idx)=>{
-    bloques.appendChild(crearBloqueEnvuelto(nombre, idx));
-  });
+/* envueltos dinámicos */
+const ENVUELTOS=["Humita","Chigüil","Tamal lojano","Tamales Pelileo","Tamal de mote","Tamales de zambo","Bollo de pescado","Tonga manaba","Tonga marinera","Maito de pescado","Maito de gallina","Maito de chontacuro","Pescado moqueado / ahumado","Ayampaco","Dulce/conserva de guineo","Chivil","Vincundo / Putsucutanda","Arepa de zapallo","Timbulo","Quimbolito"];
+const lista=document.getElementById("envueltos-list"),otros=document.getElementById("env-otros"),bloques=document.getElementById("bloques");
+ENVUELTOS.forEach((e,i)=>{lista.insertAdjacentHTML("beforeend",`<label><input type="checkbox" value="${e}" id="env_${i}">${e}</label>`);});
+function generarBloque(nombre,idx){
+  return `<fieldset class="envuelto"><legend>${nombre}</legend>
+  <h3>1) Tipo de masa/base</h3>${crearLista("masa",idx,["Harina de maíz","Harina de trigo","Arroz","Yuca","Verde/plátano","Zambo","Mote","Maíz/choclo tierno","Guineo/plátano maduro","Zapallo","Otros"])}
+  <h3>2) Tipo de relleno</h3>${crearLista("relleno",idx,["Carne de cerdo","Carne de res","Gallina","Pollo","Pescado","Pulpo","Calamar","Camarón","Chontacuro","Queso","Maní","Pasas","Higos en conserva","Dulce de leche","Panela","Sin relleno","Otros"])}
+  <h3>3) Tipo de hoja</h3>${crearLista("hoja",idx,["Hoja de achira","Hoja de bijao","Hoja de planta de maíz","Hoja de huicundo","Hoja de plátano (fresca)","Hoja de plátano (seca)","Hoja de choclo (fresca)","Hoja de choclo (seca)","Otros"])}
+  <h3>4) Técnica de cocción</h3>${crearLista("tecnica",idx,["Hervido","Al vapor","Cocción lenta","Al horno (industrial)","Al horno (manaba)","Al rescoldo / brasa","Baño maría","Bajo tierra","Otros"])}
+  <h3>5) Herramienta de cocción</h3>${crearLista("herramienta",idx,["Olla vaporera / tamalera","Olla de barro","Lata para horno","Ollas","Paila","Parrilla","Otros"])}
+  <h3>6) Medio de aprendizaje</h3>${crearLista("aprendizaje",idx,["Madres/abuelas","Cursos de cocina","Institutos gastronómicos","Universidad con carrera de Gastronomía","Cocineros/as tradicionales","Experiencia propia","Medios digitales","Libros o recetarios","Lugar de trabajo","Otros"])}
+  <h3>7) Contexto o situaciones</h3>${crearLista("contexto",idx,["Festivo o cultural","Familiar o social","Comercial","Consumo cotidiano"])}
+  </fieldset>`;
 }
-
-/* ------------------ BLOQUE POR ENVUELTO ------------------ */
-function crearChecklist(grupoName, opciones, envIndex){
-  const cont = document.createElement('div');
-  cont.className = "checklist";
-  opciones.forEach((op,j)=>{
-    const id = `${grupoName}_${envIndex}_${j}`;
-    const item = document.createElement('div');
-    item.className = "check";
-    const isOtros = op === "Otros";
-    item.innerHTML = `
-      <input type="checkbox" id="${id}" name="${grupoName}_${envIndex}" value="${op}" aria-controls="${id}_otros" />
-      <label for="${id}">${op}</label>
-      ${isOtros ? `<input type="text" id="${id}_otros" class="hidden" placeholder="Especifique 'Otros'..." />` : ""}
-    `;
-    cont.appendChild(item);
-  });
-
-  // Mostrar input cuando marcan "Otros"
-  cont.addEventListener('change', (e)=>{
-    const target = e.target;
-    if(target.type === "checkbox"){
-      const ctrl = document.getElementById(`${target.id}_otros`);
-      if(ctrl){
-        ctrl.classList.toggle('hidden', !target.checked);
-        if(target.checked) ctrl.focus();
-        else ctrl.value = "";
-      }
-    }
-  });
-
-  return cont;
+function crearLista(grupo,idx,opciones){
+  return `<div class="checklist">${opciones.map((o,j)=>`<label><input type="checkbox" name="${grupo}_${idx}" value="${o}">${o}${o==="Otros"?': <input type="text" name="${grupo}_${idx}_otro" style="width:60%">':''}</label>`).join('')}</div>`;
 }
-
-function crearBloqueEnvuelto(nombre, envIndex){
-  const fs = document.createElement('fieldset');
-  fs.className = "envuelto";
-  fs.innerHTML = `<legend>Envuelto: ${nombre}</legend>`;
-
-  // 1) Masa/base
-  const s1 = document.createElement('section');
-  s1.innerHTML = `<h3>1) Tipo de masa/base (opción múltiple)</h3>`;
-  s1.appendChild(crearChecklist('masa', PREGUNTAS.masa, envIndex));
-  fs.appendChild(s1);
-
-  // 2) Relleno
-  const s2 = document.createElement('section');
-  s2.innerHTML = `<h3>2) Relleno que se utiliza (opción múltiple)</h3>`;
-  s2.appendChild(crearChecklist('relleno', PREGUNTAS.relleno, envIndex));
-  fs.appendChild(s2);
-
-  // 3) Tipo de hoja
-  const s3 = document.createElement('section');
-  s3.innerHTML = `<h3>3) Tipo de hoja que se usa (opción múltiple)</h3>`;
-  s3.appendChild(crearChecklist('hoja', PREGUNTAS.hoja, envIndex));
-  fs.appendChild(s3);
-
-  // 4) Técnica de cocción
-  const s4 = document.createElement('section');
-  s4.innerHTML = `<h3>4) Técnica de cocción que se usa (opción múltiple)</h3>`;
-  s4.appendChild(crearChecklist('tecnica', PREGUNTAS.tecnica, envIndex));
-  fs.appendChild(s4);
-
-  // 5) Herramienta
-  const s5 = document.createElement('section');
-  s5.innerHTML = `<h3>5) Herramienta que se usa (opción múltiple)</h3>`;
-  s5.appendChild(crearChecklist('herramienta', PREGUNTAS.herramienta, envIndex));
-  fs.appendChild(s5);
-
-  // 6) Formas de transmisión
-  const s6 = document.createElement('section');
-  s6.innerHTML = `<h3>6) Formas de transmitir estos conocimientos (opción múltiple)</h3>`;
-  s6.appendChild(crearChecklist('transmision', PREGUNTAS.transmision, envIndex));
-  fs.appendChild(s6);
-
-  // 7) Contexto
-  const s7 = document.createElement('section');
-  s7.innerHTML = `<h3>7) Contexto en el que tradicionalmente se prepara este alimento</h3>
-  <div class="grid g2">
-    <div>
-      <div class="check"><input type="checkbox" id="ctx_fest_${envIndex}"><label for="ctx_fest_${envIndex}">Festivo / cultural</label></div>
-      <input type="text" id="ctx_fest_txt_${envIndex}" class="hidden" placeholder="¿Cuáles?" />
-    </div>
-    <div>
-      <div class="check"><input type="checkbox" id="ctx_com_${envIndex}"><label for="ctx_com_${envIndex}">Comercial</label></div>
-      <input type="text" id="ctx_com_txt_${envIndex}" class="hidden" placeholder="¿Cuáles?" />
-    </div>
-    <div>
-      <div class="check"><input type="checkbox" id="ctx_cot_${envIndex}"><label for="ctx_cot_${envIndex}">Consumo cotidiano</label></div>
-      <input type="text" id="ctx_cot_txt_${envIndex}" class="hidden" placeholder="¿Cuáles?" />
-    </div>
-    <div>
-      <div class="check"><input type="checkbox" id="ctx_cel_${envIndex}"><label for="ctx_cel_${envIndex}">Celebración familiar</label></div>
-      <input type="text" id="ctx_cel_txt_${envIndex}" class="hidden" placeholder="¿Cuáles?" />
-    </div>
-    <div>
-      <div class="check"><input type="checkbox" id="ctx_otr_${envIndex}"><label for="ctx_otr_${envIndex}">Otros</label></div>
-      <input type="text" id="ctx_otr_txt_${envIndex}" class="hidden" placeholder="¿Cuáles?" />
-    </div>
-  </div>`;
-  // toggle de contextos
-  s7.addEventListener('change', (e)=>{
-    if(e.target.type==="checkbox"){
-      const idTxt = e.target.id.replace(/$/, "_txt");
-      const el = document.getElementById(idTxt);
-      if(el){ el.classList.toggle('hidden', !e.target.checked); if(e.target.checked) el.focus(); else el.value=""; }
-    }
-  });
-  fs.appendChild(s7);
-
-  return fs;
+function actualizar(){
+  const sel=[...lista.querySelectorAll("input:checked")].map(i=>i.value);
+  if(otros.value.trim())sel.push(`Otros: ${otros.value.trim()}`);
+  bloques.innerHTML=sel.map((n,i)=>generarBloque(n,i)).join('');
 }
+lista.onchange=otros.oninput=actualizar;
 
-/* ------------------ TRANSMISORES CHECKS ------------------ */
-const transmList = document.getElementById('transmisores-list');
-TRANSMISORES.forEach((t,i)=>{
-  const id = `tx_${i}`;
-  const row = document.createElement('div');
-  row.className = "check";
-  const isOtros = t==="Otros";
-  row.innerHTML = `
-    <input type="checkbox" id="${id}" value="${t}">
-    <label for="${id}">${t}</label>
-    ${isOtros ? `<input type="text" id="${id}_txt" class="hidden" placeholder="Especifique 'Otros'..." />` : ""}
-  `;
-  transmList.appendChild(row);
-});
-transmList.addEventListener('change',(e)=>{
-  if(e.target.type==="checkbox" && e.target.id.startsWith("tx_")){
-    const txt = document.getElementById(`${e.target.id}_txt`);
-    if(txt){ txt.classList.toggle('hidden', !e.target.checked); if(e.target.checked) txt.focus(); else txt.value=""; }
-  }
-});
-
-/* ------------------ ENVÍO ------------------ */
-const form = document.getElementById('form');
-const formMsg = document.getElementById('form-msg');
-
-// URL de tu Apps Script (misma que ya funciona)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec";
-
-form.addEventListener('submit', async (e)=>{
+/* envío */
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec";
+const formMsg=document.getElementById("form-msg");
+form.addEventListener("submit",async e=>{
   e.preventDefault();
-  formMsg.className = "msg";
-  formMsg.textContent = "Enviando respuestas…";
-
-  // envueltos seleccionados
-  const seleccionados = [...envList.querySelectorAll('input:checked')].map(i=>i.value);
-  const otrosTexto = envOtrosInput.value.trim();
-  if(otrosTexto) seleccionados.push(`Otros: ${otrosTexto}`);
-
-  // armar respuestas por envuelto
-  const respuestasPorEnvuelto = {};
-  [...bloques.querySelectorAll('fieldset.envuelto')].forEach((fs, idx)=>{
-    const titulo = fs.querySelector('legend')?.textContent?.replace(/^Envuelto:\s*/, '') || `Envuelto ${idx+1}`;
-
-    function colectar(grupo){
-      const checks = [...fs.querySelectorAll(`input[name^="${grupo}_${idx}"]`)];
-      const vals = [];
-      checks.forEach(ch=>{
-        if(ch.checked){
-          if(ch.value==="Otros"){
-            const txt = document.getElementById(`${ch.id}_otros`);
-            vals.push(txt && txt.value.trim() ? `Otros: ${txt.value.trim()}` : "Otros");
-          }else{
-            vals.push(ch.value);
-          }
-        }
-      });
-      return vals;
-    }
-
-    const contexto = {};
-    [["fest","Festivo / cultural"],["com","Comercial"],["cot","Consumo cotidiano"],["cel","Celebración familiar"],["otr","Otros"]]
-    .forEach(([key,label])=>{
-      const cb = fs.querySelector(`#ctx_${key}_${idx}`);
-      const txt = fs.querySelector(`#ctx_${key}_txt_${idx}`);
-      if(cb && cb.checked){
-        contexto[label] = (txt && txt.value.trim()) ? txt.value.trim() : "";
-      }
-    });
-
-    respuestasPorEnvuelto[titulo] = {
-      masa: colectar('masa'),
-      relleno: colectar('relleno'),
-      hoja: colectar('hoja'),
-      tecnica: colectar('tecnica'),
-      herramienta: colectar('herramienta'),
-      transmision: colectar('transmision'),
-      contexto
-    };
-  });
-
-  // transmisores
-  const transmisoresSel = [];
-  [...transmList.querySelectorAll('input[type=checkbox]')].forEach(ch=>{
-    if(ch.checked){
-      if(ch.value==="Otros"){
-        const txt = document.getElementById(`${ch.id}_txt`);
-        transmisoresSel.push(txt && txt.value.trim() ? `Otros: ${txt.value.trim()}` : "Otros");
-      }else{
-        transmisoresSel.push(ch.value);
-      }
-    }
-  });
-
-  const payload = {
-    nombres: document.getElementById('nombres').value,
-    edad: document.getElementById('edad').value,
-    genero: document.getElementById('genero').value,
-    region: document.getElementById('region').value,
-    provincia: document.getElementById('provincia').value,
-    ciudad: document.getElementById('ciudad').value,
-    actividad: document.getElementById('actividad').value,
-    experiencia: document.getElementById('experiencia').value,
-    envueltosSeleccionados: seleccionados,
-    respuestasPorEnvuelto,
-    transmisores: transmisoresSel,
-    variaciones: document.getElementById('variaciones').value,
-    transformaciones: document.getElementById('transformaciones').value,
-    estrategias: document.getElementById('estrategias').value
-  };
-
+  formMsg.className="msg";formMsg.textContent="⏳ Enviando respuestas, por favor espere…";
+  const data=Object.fromEntries(new FormData(form));
   try{
-    await fetch(SCRIPT_URL, {
-      method:"POST",
-      mode:"no-cors",                 /* mantiene compatibilidad GitHub Pages */
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload)
-    });
-    formMsg.className="msg ok";
-    formMsg.textContent="✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-    form.reset();
-    envOtrosInput.value="";
-    bloques.innerHTML="";
+    await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    formMsg.className="msg ok";formMsg.textContent="✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
+    form.reset();bloques.innerHTML="";
   }catch(err){
-    formMsg.className="msg err";
-    formMsg.textContent="❌ Error al conectar con el servidor. Intenta nuevamente.";
+    formMsg.className="msg err";formMsg.textContent="❌ Error al conectar con el servidor. Intenta nuevamente.";
   }
+});
 });
 </script>
 </body>
