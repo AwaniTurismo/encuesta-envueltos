@@ -31,14 +31,13 @@ textarea{min-height:84px;resize:vertical}
 .grid{display:grid;gap:14px}
 .g2{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
 .checklist{display:grid;gap:.4rem;margin:.4rem 0}
-.check{display:flex;align-items:flex-start;gap:.55rem}
-.check input[type=checkbox],.check input[type=radio]{transform:translateY(2px)}
 .otros-wrap{display:flex;gap:.5rem;align-items:center;margin-left:1.7rem}
 .acciones{display:flex;gap:.6rem;flex-wrap:wrap}
 button{all:unset;display:inline-block;cursor:pointer;user-select:none;background:var(--pri);color:#fff;
-  padding:.75rem 1.1rem;border-radius:10px;font-weight:600}
+  padding:.75rem 1.1rem;border-radius:10px;font-weight:600;transition:.2s}
 button.secondary{background:#eef2f8;color:#182335}
 button:hover{background:var(--pri-600)}button.secondary:hover{background:#e5ebf4}
+button:disabled{opacity:.6;cursor:not-allowed}
 .msg{display:none;margin-top:.8rem;padding:.75rem .9rem;border-radius:10px;font-weight:600}
 .msg.ok{display:block;background:#e6f4ea;color:var(--ok);border:1px solid #c7e7cd}
 .msg.err{display:block;background:#fce8e6;color:var(--err);border:1px solid #f4b7b1}
@@ -61,8 +60,8 @@ fieldset.envuelto legend{font-weight:700;color:var(--pri)}
   <!-- CONSENTIMIENTO -->
   <section id="consent-card" class="card">
     <h2>Política y Privacidad</h2>
-    <p>La presente encuesta es un trabajo de investigación en el cual se busca conocer los distintos tipos de envueltos elaborados en cada región del país, cuyo objetivo es documentar, preservar y visibilizar la diversidad de envueltos que forman parte del patrimonio culinario ecuatoriano.</p>
-    <p>Su participación en esta encuesta es completamente voluntaria y libre. Al continuar, usted manifiesta su consentimiento informado para participar en este estudio comprendiendo que la información recabada será utilizada exclusivamente con fines académicos y de investigación. Todos los datos serán tratados de manera confidencial y no se divulgará información personal fuera del contexto de este estudio.</p>
+    <p>La presente encuesta busca documentar, preservar y visibilizar la diversidad de envueltos tradicionales del Ecuador como patrimonio culinario.</p>
+    <p>Su participación es voluntaria y los datos serán usados únicamente con fines académicos. Al continuar, usted da su consentimiento informado.</p>
     <div class="acciones">
       <button id="btn-acepto">✅ Sí, acepto participar</button>
       <button class="secondary" id="btn-noacepto">❌ No, gracias</button>
@@ -72,7 +71,6 @@ fieldset.envuelto legend{font-weight:700;color:var(--pri)}
 
   <!-- FORMULARIO -->
   <form id="form" class="card hidden">
-    <!-- SECCIÓN I -->
     <h2>SECCIÓN I: Datos Generales</h2>
     <h3>Seleccione el rango de edad al que pertenece</h3>
     <div class="checklist">
@@ -109,7 +107,7 @@ fieldset.envuelto legend{font-weight:700;color:var(--pri)}
       <label><input type="checkbox" name="actividad" value="Docente de gastronomía">Docente de gastronomía</label>
       <label><input type="checkbox" name="actividad" value="Promotor/a cultural o turístico">Promotor/a cultural o turístico</label>
       <label><input type="checkbox" name="actividad" value="Chef profesional">Chef profesional</label>
-      <label><input type="checkbox" name="actividad" value="Emprendedor/a o propietario de negocio">Emprendedor/a o propietario de negocio gastronómico</label>
+      <label><input type="checkbox" name="actividad" value="Emprendedor/a o propietario de negocio gastronómico">Emprendedor/a o propietario de negocio gastronómico</label>
     </div>
 
     <h3>Años de experiencia en la actividad gastronómica</h3>
@@ -121,20 +119,18 @@ fieldset.envuelto legend{font-weight:700;color:var(--pri)}
       <label><input type="radio" name="experiencia" value="Más de 10 años">Más de 10 años</label>
     </div>
 
-    <!-- SECCIÓN II -->
     <h2>SECCIÓN II: Envueltos</h2>
     <p>Seleccione 1 o más envueltos representativos de su región o provincia.</p>
     <div id="envueltos-list" class="checklist"></div>
     <div class="otros-wrap"><label>Otros:</label><input id="env-otros" type="text" placeholder="Especifique"></div>
     <div id="bloques"></div>
 
-    <!-- SECCIÓN III -->
     <h2>SECCIÓN III: Estrategias</h2>
-    <h3>8) ¿Qué estrategias utiliza o ha utilizado para conservar y transmitir los conocimientos sobre la preparación de envueltos?</h3>
+    <h3>¿Qué estrategias utiliza o ha utilizado para conservar y transmitir los conocimientos sobre la preparación de envueltos?</h3>
     <div class="checklist">
-      <label><input type="checkbox" name="estrategias" value="Talleres de cocina o demostraciones prácticas">Talleres o demostraciones prácticas</label>
-      <label><input type="checkbox" name="estrategias" value="Transmisión en el hogar (enseñanza familiar)">Transmisión en el hogar</label>
-      <label><input type="checkbox" name="estrategias" value="Actividades comunitarias o ferias gastronómicas">Actividades comunitarias / ferias</label>
+      <label><input type="checkbox" name="estrategias" value="Talleres o demostraciones prácticas">Talleres o demostraciones prácticas</label>
+      <label><input type="checkbox" name="estrategias" value="Transmisión en el hogar">Transmisión en el hogar</label>
+      <label><input type="checkbox" name="estrategias" value="Actividades comunitarias / ferias">Actividades comunitarias / ferias</label>
       <label><input type="checkbox" name="estrategias" value="Docencia en instituciones educativas">Docencia en instituciones educativas</label>
       <label><input type="checkbox" name="estrategias" value="Publicaciones o material escrito">Publicaciones o material escrito</label>
       <label><input type="checkbox" name="estrategias" value="Uso de medios digitales">Uso de medios digitales</label>
@@ -147,53 +143,102 @@ fieldset.envuelto legend{font-weight:700;color:var(--pri)}
 
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
-/* consentimiento */
-const btnYes=document.getElementById("btn-acepto"),btnNo=document.getElementById("btn-noacepto"),
-card=document.getElementById("consent-card"),form=document.getElementById("form"),msg=document.getElementById("consent-msg");
-btnYes.onclick=()=>{card.classList.add("hidden");form.classList.remove("hidden")};
-btnNo.onclick=()=>{msg.textContent="Has decidido no participar. Gracias por tu tiempo.";msg.className="msg err"};
 
-/* envueltos dinámicos */
-const ENVUELTOS=["Humita","Chigüil","Tamal lojano","Tamales Pelileo","Tamal de mote","Tamales de zambo","Bollo de pescado","Tonga manaba","Tonga marinera","Maito de pescado","Maito de gallina","Maito de chontacuro","Pescado moqueado / ahumado","Ayampaco","Dulce/conserva de guineo","Chivil","Vincundo / Putsucutanda","Arepa de zapallo","Timbulo","Quimbolito"];
-const lista=document.getElementById("envueltos-list"),otros=document.getElementById("env-otros"),bloques=document.getElementById("bloques");
-ENVUELTOS.forEach((e,i)=>{lista.insertAdjacentHTML("beforeend",`<label><input type="checkbox" value="${e}" id="env_${i}">${e}</label>`);});
-function generarBloque(nombre,idx){
-  return `<fieldset class="envuelto"><legend>${nombre}</legend>
-  <h3>1) Tipo de masa/base</h3>${crearLista("masa",idx,["Harina de maíz","Harina de trigo","Arroz","Yuca","Verde/plátano","Zambo","Mote","Maíz/choclo tierno","Guineo/plátano maduro","Zapallo","Otros"])}
-  <h3>2) Tipo de relleno</h3>${crearLista("relleno",idx,["Carne de cerdo","Carne de res","Gallina","Pollo","Pescado","Pulpo","Calamar","Camarón","Chontacuro","Queso","Maní","Pasas","Higos en conserva","Dulce de leche","Panela","Sin relleno","Otros"])}
-  <h3>3) Tipo de hoja</h3>${crearLista("hoja",idx,["Hoja de achira","Hoja de bijao","Hoja de planta de maíz","Hoja de huicundo","Hoja de plátano (fresca)","Hoja de plátano (seca)","Hoja de choclo (fresca)","Hoja de choclo (seca)","Otros"])}
-  <h3>4) Técnica de cocción</h3>${crearLista("tecnica",idx,["Hervido","Al vapor","Cocción lenta","Al horno (industrial)","Al horno (manaba)","Al rescoldo / brasa","Baño maría","Bajo tierra","Otros"])}
-  <h3>5) Herramienta de cocción</h3>${crearLista("herramienta",idx,["Olla vaporera / tamalera","Olla de barro","Lata para horno","Ollas","Paila","Parrilla","Otros"])}
-  <h3>6) Medio de aprendizaje</h3>${crearLista("aprendizaje",idx,["Madres/abuelas","Cursos de cocina","Institutos gastronómicos","Universidad con carrera de Gastronomía","Cocineros/as tradicionales","Experiencia propia","Medios digitales","Libros o recetarios","Lugar de trabajo","Otros"])}
-  <h3>7) Contexto o situaciones</h3>${crearLista("contexto",idx,["Festivo o cultural","Familiar o social","Comercial","Consumo cotidiano"])}
-  </fieldset>`;
-}
-function crearLista(grupo,idx,opciones){
-  return `<div class="checklist">${opciones.map((o,j)=>`<label><input type="checkbox" name="${grupo}_${idx}" value="${o}">${o}${o==="Otros"?': <input type="text" name="${grupo}_${idx}_otro" style="width:60%">':''}</label>`).join('')}</div>`;
-}
-function actualizar(){
-  const sel=[...lista.querySelectorAll("input:checked")].map(i=>i.value);
-  if(otros.value.trim())sel.push(`Otros: ${otros.value.trim()}`);
-  bloques.innerHTML=sel.map((n,i)=>generarBloque(n,i)).join('');
-}
-lista.onchange=otros.oninput=actualizar;
+  const btnYes=document.getElementById("btn-acepto"),
+        btnNo=document.getElementById("btn-noacepto"),
+        card=document.getElementById("consent-card"),
+        form=document.getElementById("form"),
+        msg=document.getElementById("consent-msg");
 
-/* envío */
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxkfMf-cDAUAmXBZaFaCICnekeNFZ6DkP5Dwvm5UwNmY8CRaqivKMa5TWUeP7JnQiv32g/exec";
-const formMsg=document.getElementById("form-msg");
-form.addEventListener("submit",async e=>{
-  e.preventDefault();
-  formMsg.className="msg";formMsg.textContent="⏳ Enviando respuestas, por favor espere…";
-  const data=Object.fromEntries(new FormData(form));
-  try{
-    await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
-    formMsg.className="msg ok";formMsg.textContent="✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
-    form.reset();bloques.innerHTML="";
-  }catch(err){
-    formMsg.className="msg err";formMsg.textContent="❌ Error al conectar con el servidor. Intenta nuevamente.";
+  btnYes.addEventListener("click",()=>{
+    card.classList.add("hidden");
+    form.classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+  btnNo.addEventListener("click",()=>{
+    msg.textContent="Has decidido no participar. Gracias por tu tiempo.";
+    msg.className="msg err";
+  });
+
+  const ENVUELTOS=["Humita","Chigüil","Tamal lojano","Tamales Pelileo","Tamal de mote","Tamales de zambo","Bollo de pescado","Tonga manaba","Tonga marinera","Maito de pescado","Maito de gallina","Maito de chontacuro","Pescado moqueado / ahumado","Ayampaco","Dulce/conserva de guineo","Chivil","Vincundo / Putsucutanda","Arepa de zapallo","Timbulo","Quimbolito"];
+  const lista=document.getElementById("envueltos-list"),
+        otros=document.getElementById("env-otros"),
+        bloques=document.getElementById("bloques");
+
+  ENVUELTOS.forEach((e,i)=>lista.insertAdjacentHTML("beforeend",`<label><input type="checkbox" value="${e}" id="env_${i}">${e}</label>`));
+
+  function crearLista(grupo,idx,opciones){
+    return `<div class="checklist">${opciones.map(o=>{
+      const esOtro=o==="Otros";
+      const inputExtra=esOtro?`: <input type="text" name="${grupo}_${idx}_otro" data-grupo="${grupo}_${idx}" style="width:60%">`:"";
+      return `<label><input type="checkbox" name="${grupo}_${idx}" value="${o}" ${esOtro?'data-es-otro="true"':''}>${o}${inputExtra}</label>`;
+    }).join('')}</div>`;
   }
-});
+
+  function generarBloque(nombre,idx){
+    return `<fieldset class="envuelto"><legend>${nombre}</legend>
+    <h3>1) Tipo de masa/base</h3>${crearLista("masa",idx,["Harina de maíz","Harina de trigo","Arroz","Yuca","Verde/plátano","Zambo","Mote","Maíz/choclo tierno","Guineo/plátano maduro","Zapallo","Otros"])}
+    <h3>2) Relleno</h3>${crearLista("relleno",idx,["Carne de cerdo","Carne de res","Gallina","Pollo","Pescado","Pulpo","Calamar","Camarón","Chontacuro","Queso","Maní","Pasas","Higos en conserva","Dulce de leche","Panela","Sin relleno","Otros"])}
+    <h3>3) Tipo de hoja</h3>${crearLista("hoja",idx,["Hoja de achira","Hoja de bijao","Hoja de maíz","Hoja de huicundo","Hoja de plátano (fresca)","Hoja de plátano (seca)","Hoja de choclo (fresca)","Hoja de choclo (seca)","Otros"])}
+    <h3>4) Técnica de cocción</h3>${crearLista("tecnica",idx,["Hervido","Al vapor","Cocción lenta","Al horno (industrial)","Al horno (manaba)","Al rescoldo / brasa","Baño maría","Bajo tierra","Otros"])}
+    <h3>5) Herramienta</h3>${crearLista("herramienta",idx,["Olla vaporera / tamalera","Olla de barro","Lata para horno","Ollas","Paila","Parrilla","Otros"])}
+    <h3>6) Aprendizaje</h3>${crearLista("aprendizaje",idx,["Madres/abuelas","Cursos de cocina","Institutos gastronómicos","Universidad con carrera de Gastronomía","Cocineros/as tradicionales","Experiencia propia","Medios digitales","Libros o recetarios","Lugar de trabajo","Otros"])}
+    <h3>7) Contexto o situaciones</h3>${crearLista("contexto",idx,["Festivo o cultural","Familiar o social","Comercial","Consumo cotidiano"])}</fieldset>`;
+  }
+
+  function actualizar(){
+    const sel=[...lista.querySelectorAll("input:checked")].map(i=>i.value);
+    if(otros.value.trim())sel.push(`Otros: ${otros.value.trim()}`);
+    bloques.innerHTML=sel.map((n,i)=>generarBloque(n,i)).join('');
+  }
+  lista.onchange=otros.oninput=actualizar;
+
+  const SCRIPT_URL="https://script.google.com/macros/s/AKfycbyWghgG0c0BoYyuXa7UKSk-Hhk-Wk7v2RXWUm3PzB2UjK6ZQYaDfshrNTk58gAAChi0UA/exec";
+  const formMsg=document.getElementById("form-msg");
+
+  form.addEventListener("submit", async e=>{
+    e.preventDefault();
+    const btn=form.querySelector("button[type=submit]");
+    btn.disabled=true;
+    formMsg.className="msg";
+    formMsg.style.display="block";
+    formMsg.textContent="⏳ Enviando respuestas, por favor espere…";
+    await new Promise(r=>setTimeout(r,150));
+
+    const fd=new FormData(form);
+    const data={};
+    fd.forEach((value,key)=>{data[key]=data[key]?data[key]+", "+value:value;});
+
+    const envueltosSeleccionados=[];
+    lista.querySelectorAll('input[type=checkbox]:checked').forEach(chk=>envueltosSeleccionados.push(chk.value));
+    if(otros.value.trim()) envueltosSeleccionados.push("Otros: "+otros.value.trim());
+    data["EnvueltosSeleccionados"]=envueltosSeleccionados.join(", ");
+
+    document.querySelectorAll('input[type=text][name*="_otro"]').forEach(input=>{
+      if(input.value.trim()!==""){
+        const key=input.dataset.grupo;
+        const checkbox=document.querySelector(`input[data-es-otro="true"][name="${key}"]`);
+        if(checkbox&&checkbox.checked){
+          data[key]=(data[key]?data[key]+", ":"")+"Otros: "+input.value.trim();
+        }
+      }
+    });
+
+    try{
+      await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+      formMsg.className="msg ok";
+      formMsg.textContent="✅ ¡Gracias! Tus respuestas se han guardado correctamente.";
+      form.reset();
+      bloques.innerHTML="";
+    }catch(err){
+      formMsg.className="msg err";
+      formMsg.textContent="❌ Error al conectar con el servidor. Intenta nuevamente.";
+    }
+
+    setTimeout(()=>{btn.disabled=false;},2000);
+  });
 });
 </script>
+
 </body>
 </html>
